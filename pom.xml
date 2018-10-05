@@ -10,7 +10,7 @@
 
     <packaging>war</packaging>
 
-    <name>Gamification WP1</name>
+    <name>Gamification_WP1</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,7 +40,7 @@
     </dependencies>
 
     <build>
-        <finalName>Gamification WP1</finalName>
+        <finalName>Gamification_WP1</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
