@@ -8,8 +8,49 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>ch.heigvd.amt.wp1.presentation.LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>ch.heigvd.amt.wp1.presentation.RegisterServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>ch.heigvd.amt.wp1.presentation.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MyAppsServlet</servlet-name>
+        <servlet-class>ch.heigvd.amt.wp1.presentation.MyAppsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AllAppsServlet</servlet-name>
+        <servlet-class>ch.heigvd.amt.wp1.presentation.AllAppsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AllUsersServlet</servlet-name>
+        <servlet-class>ch.heigvd.amt.wp1.presentation.AllUsersServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MyAppsServlet</servlet-name>
+        <url-pattern>/my_apps</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AllAppsServlet</servlet-name>
+        <url-pattern>/all_apps</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AllUsersServlet</servlet-name>
+        <url-pattern>/all_users</url-pattern>
     </servlet-mapping>
 </web-app>
