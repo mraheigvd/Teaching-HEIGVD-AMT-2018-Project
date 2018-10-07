@@ -56,7 +56,7 @@ public class ApplicationServlet extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
         Map<String, String> messages = new HashMap<>();
 
-        if (action.equals("NEW")) {
+        if (action.equals("CREATE")) {
             System.out.println("NEW ACTION");
             createApplication(user, request, messages);
         } else if (action.equals("EDIT")) {

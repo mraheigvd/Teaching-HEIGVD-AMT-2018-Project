@@ -49,48 +49,51 @@
         </div>
     </div>
 </form>
-<hr>
+
 <br>
 
-<div class="text-center">
-    <h3>List of applications</h3>
-</div>
-
-<br><br>
-<div class="table-responsive">
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th width="30%">Description</th>
-            <th width="20%">App key</th>
-            <th width="20%">App token</th>
-            <th class="text-center">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-            <c:forEach items="${applications}" var="app">
+<c:if test="${empty application}">
+    <hr>
+    <br>
+    <div class="text-center">
+        <h3>List of applications</h3>
+    </div>
+    <br><br>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
             <tr>
-                <th>${app.name}</th>
-                <td width="30%">${app.description}</td>
-                <td width="20%">${app.appKey}</td>
-                <td width="20%">${app.appToken}</td>
-                <td class="text-center">
-                    <div class="dropdown">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            Action
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a href="/applications?action=edit&app_id=${app.id}" class="dropdown-item">Edit</a>
-                            <a href="/applications?action=delete&app_id=${app.id}" class="dropdown-item">Delete</a>
-                            <a href="/applications?action=regenerate&app_id=${app.id}" class="dropdown-item">Regenerate token</a>
-                        </div>
-                    </div>
-                </td>
+                <th>Name</th>
+                <th width="30%">Description</th>
+                <th width="20%">App key</th>
+                <th width="20%">App token</th>
+                <th class="text-center">Action</th>
             </tr>
-            </c:forEach>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                <c:forEach items="${applications}" var="app">
+                <tr>
+                    <th>${app.name}</th>
+                    <td width="30%">${app.description}</td>
+                    <td width="20%">${app.appKey}</td>
+                    <td width="20%">${app.appToken}</td>
+                    <td class="text-center">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Action
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <a href="/applications?action=edit&app_id=${app.id}" class="dropdown-item">Edit</a>
+                                <a href="/applications?action=delete&app_id=${app.id}" class="dropdown-item">Delete</a>
+                                <a href="/applications?action=regenerate&app_id=${app.id}" class="dropdown-item">Regenerate token</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+    </div>
+</c:if>
 
 <%@ include file="layout/footer.jsp" %>
