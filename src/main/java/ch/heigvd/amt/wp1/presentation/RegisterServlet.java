@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
 
 @WebServlet(urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
-<<<<<<< HEAD
 
     private UserRepository userRepository = new UserRepository();
 
@@ -49,13 +48,13 @@ public class RegisterServlet extends HttpServlet {
         if (passwordConfirmation.isEmpty())
             errors.put("password_confirmation_error", "Password confirmation is empty");
 
-        if ( ! password.equals(passwordConfirmation))
+        if (!password.equals(passwordConfirmation))
             errors.put("password_error", "Password and password confirmation are not the same");
 
         boolean isEmailAlreadyTaken = userRepository.findByEmail(email).getId() != null;
 
         // No errors, we can create the user
-        if (errors.isEmpty() && ! isEmailAlreadyTaken) {
+        if (errors.isEmpty() && !isEmailAlreadyTaken) {
             // Hash and save the user
             PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
             String hashed_pass = passwordAuthentication.hash(password.toCharArray());
@@ -82,11 +81,6 @@ public class RegisterServlet extends HttpServlet {
             request.setAttribute("email_error", "Email already taken !");
 
         request.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(request, response);
-=======
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(request, response);
->>>>>>> 72a0ede45b73c51be61d154e50b2354c49448b01
     }
 
 }
