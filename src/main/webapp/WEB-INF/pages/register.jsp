@@ -45,7 +45,7 @@
                 <div class="form-control-feedback">
                         <span class="text-danger align-middle">
                             <!-- Put name validation error messages here -->
-                        <c:if test="${errors != null}">
+                        <c:if test="${firstname_error != null}">
                             ${firstname_error}
                         </c:if>
                         </span>
@@ -68,7 +68,7 @@
             <div class="col-md-3">
                 <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-                        <c:if test="${errors != null}">
+                        <c:if test="${lastname_error != null}">
                             ${lastname_error}
                         </c:if>
                         </span>
@@ -91,7 +91,7 @@
             <div class="col-md-3">
                 <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-                              <c:if test="${errors != null}">
+                              <c:if test="${email_error != null}">
                                   ${email_error}
                               </c:if>
                         </span>
@@ -114,8 +114,8 @@
             <div class="col-md-3">
                 <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-                                <c:if test="${errors != null}">
-                                    <i class="fa fa-close">${password_error} </i>
+                                <c:if test="${password_error != null}">
+                                    ${password_error}
                                 </c:if>
                         </span>
                 </div>
@@ -139,8 +139,8 @@
             <div class="col-md-3">
                 <div class="form-control-feedback">
                         <span class="text-danger align-middle">
-                                <c:if test="${errors != null}">
-                                    <i class="fa fa-close">${password_confirmation_error}</i>
+                                <c:if test="${password_confirmation_error != null}">
+                                    ${password_confirmation_error}
                                 </c:if>
                         </span>
                 </div>

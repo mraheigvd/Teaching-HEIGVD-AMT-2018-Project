@@ -70,6 +70,7 @@ public class RegisterServlet extends HttpServlet {
             // Redirect the user to his profile
             System.out.println(user);
             response.sendRedirect(request.getContextPath() + "/profile");
+            return;
         }
 
         for (Map.Entry<String, String> error : errors.entrySet()) {
