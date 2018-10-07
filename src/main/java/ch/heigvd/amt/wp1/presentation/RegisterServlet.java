@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 
 @WebServlet(urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
+<<<<<<< HEAD
 
     private UserRepository userRepository = new UserRepository();
 
@@ -81,6 +82,11 @@ public class RegisterServlet extends HttpServlet {
             request.setAttribute("email_error", "Email already taken !");
 
         request.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(request, response);
+=======
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(request, response);
+>>>>>>> 72a0ede45b73c51be61d154e50b2354c49448b01
     }
 
 }
