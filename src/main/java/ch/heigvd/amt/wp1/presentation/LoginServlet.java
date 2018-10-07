@@ -20,15 +20,12 @@ public class LoginServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("here");
         request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        System.out.println(email);
-        System.out.println(password);
         Map<String, String> messages = new HashMap<>();
 
         if (email == null || email.isEmpty()) {

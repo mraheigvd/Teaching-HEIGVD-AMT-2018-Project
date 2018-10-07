@@ -1,11 +1,6 @@
 <component name="ArtifactManager">
-<<<<<<< HEAD
   <artifact type="exploded-war" build-on-make="true" name="Teaching-HEIGVD-AMT-2018-Project:war exploded">
     <output-path>$PROJECT_DIR$/target/Gamification-WP1</output-path>
-=======
-  <artifact type="exploded-war" name="Teaching-HEIGVD-AMT-2018-Project:war exploded">
-    <output-path>$PROJECT_DIR$/target/Gamification_WP1</output-path>
->>>>>>> 72a0ede45b73c51be61d154e50b2354c49448b01
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -23,11 +18,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-<<<<<<< HEAD
         <element id="file-copy" path="$PROJECT_DIR$/target/Gamification-WP1/META-INF/MANIFEST.MF" />
-=======
-        <element id="file-copy" path="$PROJECT_DIR$/target/Gamification_WP1/META-INF/MANIFEST.MF" />
->>>>>>> 72a0ede45b73c51be61d154e50b2354c49448b01
       </element>
       <element id="javaee-facet-resources" facet="Teaching-HEIGVD-AMT-2018-Project/web/Web" />
     </root>

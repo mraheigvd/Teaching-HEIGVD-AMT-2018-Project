@@ -30,6 +30,7 @@ public class UserRepository {
                 user.setIsAdmin(result.getBoolean("is_admin"));
                 user.setIsEnable(result.getBoolean("is_enable"));
                 user.setTokenValidate(result.getString("token_validate"));
+                System.out.println(user);
                 return user;
             }
         } catch (SQLException e) {
@@ -113,17 +114,17 @@ public class UserRepository {
 
     public boolean update(User user) {
         try {
-            PreparedStatement statement = database.getConnection().prepareStatement(
-                    "UPDATE " +
-                            TABLE_NAME +"set email = ?, " +
-                            "firstname = ?, " +
-                            "lastname = ?, " +
-                            "password = ?, " +
-                            "is_admin = ?, " +
-                            "is_enable = ?, " +
-                            "token_validate = ? " +
-                            "WHERE id = ?"
-            );
+            String sql = "UPDATE " +
+                    TABLE_NAME +
+                    " SET email = ?, " +
+                    "firstname = ?, " +
+                    "lastname = ?, " +
+                    "password = ?, " +
+                    "is_admin = ?, " +
+                    "is_enable = ?, " +
+                    "token_validate = ? " +
+                    "WHERE id = ?";
+            PreparedStatement statement = database.getConnection().prepareStatement(sql);
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getFirstname());
             statement.setString(3, user.getLastname());
@@ -137,7 +138,6 @@ public class UserRepository {
             if (statement.executeUpdate() == 0) {
                 throw new SQLException("Updates failed");
             }
-
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -149,7 +149,7 @@ public class UserRepository {
         try {
             PreparedStatement statement = database.getConnection().prepareStatement(
                     "UPDATE " +
-                            TABLE_NAME +"set is_enable = ?, " +
+                            TABLE_NAME +" SET is_enable = ?, " +
                             "WHERE id = ?"
             );
             statement.setBoolean(1, false);

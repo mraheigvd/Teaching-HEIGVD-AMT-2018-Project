@@ -31,8 +31,6 @@ public class SecurityFilter implements Filter {
         }
 
         if (request.getAttribute("user") == null) {
-            System.out.println("User attribute in request doesn't exists");
-
             String loginURI = request.getContextPath() + "/login";
 
             boolean loggedIn = session != null && session.getAttribute("user") != null;
