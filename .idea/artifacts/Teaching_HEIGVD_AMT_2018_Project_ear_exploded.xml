@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="exploded-ear" name="Teaching-HEIGVD-AMT-2018-Project:ear exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/Teaching_HEIGVD_AMT_2018_Project_ear_exploded</output-path>
-    <root id="root">
-      <element id="javaee-facet-resources" facet="Teaching-HEIGVD-AMT-2018-Project/javaeeApplication/javaEEApplication" />
-    </root>
-  </artifact>
-</component>
