@@ -127,27 +127,39 @@ public class ApplicationRepository {
         return null;
     }
 
-    public boolean update(Application application) {
+    public boolean update(Application application, User user) {
         try {
-            String sql = "UPDATE " +
-                    TABLE_NAME +
-                    " SET name = ?, " +
-                    "description = ?, " +
-                    "app_key = ?, " +
-                    "app_token = ? " +
-                    "WHERE id = ?";
-            PreparedStatement statement = database.getConnection().prepareStatement(sql);
-            statement.setString(1, application.getName());
-            statement.setString(2, application.getDescription());
-            statement.setString(3, application.getAppKey());
-            statement.setString(4, application.getAppToken());
-            statement.setLong(5, application.getId());
+            // Check if application is owned by user
+            PreparedStatement prepare = database.getConnection().prepareStatement("SELECT fk_application " +
+                    "FROM user_application " +
+                    "WHERE fk_application = ? AND fk_user = ? ");
+            prepare.setLong(1, application.getId());
+            prepare.setLong(2, user.getId());
+            ResultSet result = prepare.executeQuery();
+            if(result.next()) {
+                // Update if application is owned by user
+                String sql = "UPDATE " +
+                        TABLE_NAME +
+                        " SET name = ?, " +
+                        "description = ?, " +
+                        "app_key = ?, " +
+                        "app_token = ? " +
+                        "WHERE id = ?";
+                PreparedStatement statement = database.getConnection().prepareStatement(sql);
+                statement.setString(1, application.getName());
+                statement.setString(2, application.getDescription());
+                statement.setString(3, application.getAppKey());
+                statement.setString(4, application.getAppToken());
+                statement.setLong(5, application.getId());
 
-            //verifie le resultat de l'execution de la requete SQL
-            if (statement.executeUpdate() == 0) {
-                throw new SQLException("Updates failed");
+                //verifie le resultat de l'execution de la requete SQL
+                if (statement.executeUpdate() == 0) {
+                    throw new SQLException("Updates failed");
+                }
+                return true;
+            } else {
+                return false;
             }
-            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }

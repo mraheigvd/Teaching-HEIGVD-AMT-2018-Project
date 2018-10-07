@@ -31,16 +31,18 @@ public class ApplicationServlet extends HttpServlet {
             Long appId = Long.parseLong(request.getParameter("app_id"));
             applicationRepository.delete(applicationRepository.findById(appId), user);
         } else if (action.equals("REGENERATE")) {
-
-            // Security issue needs to check that the application is owned by current user
             System.out.println("REGENERATE ACTION");
             Long appId = Long.parseLong(request.getParameter("app_id"));
             Application app = applicationRepository.findById(appId);
             Application application = new Application(app.getId(), app.getName(),
                     app.getDescription(),
-                    PasswordAuthentication.generateAlphanumString(30),
-                    PasswordAuthentication.generateAlphanumString(64));
-            applicationRepository.update(application);
+                    PasswordAuthentication.generateAlphanumString(20),
+                    PasswordAuthentication.generateAlphanumString(50));
+            applicationRepository.update(application, user);
+        } else if (action.equals("EDIT")) {
+            Long appId = Long.parseLong(request.getParameter("app_id"));
+            Application app = applicationRepository.findById(appId);
+            request.setAttribute("application", app);
         }
 
         List<Application> applications = applicationRepository.findByUser(user);
@@ -59,9 +61,9 @@ public class ApplicationServlet extends HttpServlet {
             createApplication(user, request, messages);
         } else if (action.equals("EDIT")) {
             System.out.println("EDIT ACTION");
+            editApplication(user, request, messages);
         } else {
             System.out.println("NOTHING");
-
         }
 
         for (Map.Entry<String, String> error : messages.entrySet()) {
@@ -91,11 +93,39 @@ public class ApplicationServlet extends HttpServlet {
             SecureRandom random = new SecureRandom();
             Application application = new Application(name,
                     description,
-                    PasswordAuthentication.generateAlphanumString(30),
-                    PasswordAuthentication.generateAlphanumString(64));
+                    PasswordAuthentication.generateAlphanumString(20),
+                    PasswordAuthentication.generateAlphanumString(50));
             // Find and try to authenticate the user
             application = applicationRepository.create(application, user);
             if (application.getId() == null ) {
+                messages.put("error", "An error occured during the creation. Please retry.");
+            }
+            return application;
+        }
+        return null;
+    }
+
+    private Application editApplication(User user, HttpServletRequest request, Map<String, String> messages) {
+        System.out.println("EDIT action");
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        String app_id = request.getParameter("app_id");
+
+        if (name == null || name.isEmpty()) {
+            messages.put("name_error", "Please enter a valid name");
+        }
+
+        if (description == null || description.isEmpty()) {
+            messages.put("description_error", "Please enter a valid description");
+        }
+
+        if (messages.isEmpty()) {
+            System.out.println("app_id: " + app_id);
+            Application application = applicationRepository.findById(Long.parseLong(app_id));
+            application.setName(name);
+            application.setDescription(description);
+            // Find and try to authenticate the user
+            if (!applicationRepository.update(application, user)) {
                 messages.put("error", "An error occured during the creation. Please retry.");
             }
             return application;
