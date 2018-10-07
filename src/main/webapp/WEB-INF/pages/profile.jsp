@@ -23,6 +23,8 @@
         <strong>Yeah!</strong> ${success}
     </div>
 </c:if>
+
+
 <form action="/profile" method="post">
     <div class="form-group row">
         <label for="user_email" class="col-sm-2 col-form-label">Email</label>
