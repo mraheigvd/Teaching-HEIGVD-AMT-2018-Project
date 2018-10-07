@@ -2,7 +2,6 @@ package ch.heigvd.amt.wp1.filter;
 
 import ch.heigvd.amt.wp1.data.model.User;
 
-import javax.jms.Session;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +43,6 @@ public class SecurityFilter implements Filter {
                 // Protect ADMIN area
                 if (request.getRequestURI().contains(request.getContextPath() + "/admin/")) {
                     System.out.println("Contains : " + request.getContextPath() + "/admin/");
-
                     User user = (User) session.getAttribute("user");
                     if (user != null && user.getIsAdmin()) {
                         filterChain.doFilter(request, servletResponse);
@@ -52,6 +50,9 @@ public class SecurityFilter implements Filter {
                         httpResponse.sendRedirect(request.getContextPath() + "/profile");
                     }
                 } else {
+                    if (request.getRequestURI().endsWith("/"))
+                        httpResponse.sendRedirect(request.getContextPath() + "/profile");
+
                     filterChain.doFilter(request, servletResponse);
                 }
             } else if (loginRequest) {
