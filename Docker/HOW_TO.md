@@ -4,6 +4,7 @@ How to use AMT Gamification W1 ?
 
 First of all, clone this repo and build the WAR for using the latest sources, then:
 
+- Adapt the file ``db.properties`` by using with your Docker IP and ports
 - ``cd Teaching-HEIGVD-AMT-2018-Project``
 - ``mvn clean install``
 - ``cp -f target/Gamification-WP1.war Docker/``

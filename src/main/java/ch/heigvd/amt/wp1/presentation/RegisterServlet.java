@@ -51,7 +51,7 @@ public class RegisterServlet extends HttpServlet {
         if (!password.equals(passwordConfirmation))
             errors.put("password_error", "Password and password confirmation are not the same");
 
-        boolean isEmailAlreadyTaken = userRepository.findByEmail(email).getId() != null;
+        boolean isEmailAlreadyTaken = userRepository.findByEmail(email) != null;
 
         // No errors, we can create the user
         if (errors.isEmpty() && !isEmailAlreadyTaken) {

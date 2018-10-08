@@ -46,7 +46,7 @@
             </c:if>
         </ul>
         <form class="form-inline">
-            <a href="/logout" class="btn btn-outline-info my-2 my-sm-0" role="button" aria-pressed="true">Logout</a>
+            <a href="${pageContext.servletContext.contextPath}/logout" class="btn btn-outline-info my-2 my-sm-0" role="button" aria-pressed="true">Logout</a>
         </form>
     </div>
 </nav>

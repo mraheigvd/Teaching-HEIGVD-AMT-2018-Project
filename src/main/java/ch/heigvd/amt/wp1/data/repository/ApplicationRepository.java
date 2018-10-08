@@ -41,7 +41,7 @@ public class ApplicationRepository {
     }
 
     public Application findById(Long id) {
-        Application application = new Application();
+        Application application = null;
         try {
             PreparedStatement prepare = database.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE id = ?");
             prepare.setLong(1, id);

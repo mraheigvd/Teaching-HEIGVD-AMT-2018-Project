@@ -36,7 +36,7 @@ public class UserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return user;
+        return null;
     }
 
     public User findById(Long id) {
@@ -59,7 +59,7 @@ public class UserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return user;
+        return null;
     }
 
     // Hint: http://java.avdiel.com/Tutorials/JDBCPaging.html
