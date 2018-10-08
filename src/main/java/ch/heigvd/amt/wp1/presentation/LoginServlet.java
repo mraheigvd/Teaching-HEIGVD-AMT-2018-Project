@@ -40,8 +40,8 @@ public class LoginServlet extends HttpServlet {
             // Find and try to authenticate the user
             User user = userRepository.findByEmail(email);
             PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
-            System.out.println("Password chedk: " + passwordAuthentication.authenticate(password.toCharArray(), user.getPassword()));
             if (user != null && passwordAuthentication.authenticate(password.toCharArray(), user.getPassword())) {
+                System.out.println("Password chedk: " + passwordAuthentication.authenticate(password.toCharArray(), user.getPassword()));
                 request.getSession().setAttribute("user", user);
                 response.sendRedirect(request.getContextPath() + "/profile");
                 return;

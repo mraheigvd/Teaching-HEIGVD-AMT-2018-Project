@@ -34,14 +34,14 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item <c:if test="${fn:contains(pageContext.request.requestURI, 'profile.jsp')}">active</c:if>" >
-                <a class="nav-link" href="/profile">Profile</a>
+                <a class="nav-link" href="${pageContext.servletContext.contextPath}/profile">Profile</a>
             </li>
             <li class="nav-item <c:if test="${fn:contains(pageContext.request.requestURI, 'applications.jsp')}">active</c:if>">
-                <a class="nav-link" href="/applications">Applications</a>
+                <a class="nav-link" href="${pageContext.servletContext.contextPath}/applications">Applications</a>
             </li>
             <c:if test="${user.getIsAdmin()}">
                 <li class="nav-item <c:if test="${fn:contains(pageContext.request.requestURI, 'users.jsp')}">active</c:if>">
-                    <a class="nav-link" href="/users">Users</a>
+                    <a class="nav-link" href="${pageContext.servletContext.contextPath}/users">Users</a>
                 </li>
             </c:if>
         </ul>

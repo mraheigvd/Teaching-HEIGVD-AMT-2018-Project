@@ -25,7 +25,7 @@
 </c:if>
 
 
-<form action="/profile" method="post">
+<form action="${pageContext.servletContext.contextPath}/profile" method="post">
     <div class="form-group row">
         <label for="user_email" class="col-sm-2 col-form-label">Email</label>
         <div class="col-sm-10">

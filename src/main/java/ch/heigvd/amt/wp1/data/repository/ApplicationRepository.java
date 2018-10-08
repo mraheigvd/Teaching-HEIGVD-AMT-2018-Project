@@ -60,6 +60,7 @@ public class ApplicationRepository {
         return application;
     }
 
+    // Hint: http://java.avdiel.com/Tutorials/JDBCPaging.html
     public List<Application> findAll() {
         List<Application> applications = new LinkedList<Application>();
         try {

@@ -62,6 +62,7 @@ public class UserRepository {
         return user;
     }
 
+    // Hint: http://java.avdiel.com/Tutorials/JDBCPaging.html
     public List<User> findAll() {
         List<User> users = new LinkedList<User>();
         try {

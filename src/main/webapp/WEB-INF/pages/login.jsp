@@ -18,7 +18,7 @@
 </head>
 
 <body class="text-center">
-<form class="form-signin" method="post" action="/login">
+<form class="form-signin" method="post" action="${pageContext.servletContext.contextPath}/login">
     <img class="mb-4" src="" alt="" width="72" height="72">
     <h1>Gamification W1</h1>
     <h3 class="h3 mb-3 font-weight-normal">Please sign in</h3>
@@ -42,7 +42,7 @@
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    <a class="btn btn-lg btn-secondary btn-block" href="/register">Register</a>
+    <a class="btn btn-lg btn-secondary btn-block" href="${pageContext.servletContext.contextPath}/register">Register</a>
     <p class="mt-5 mb-3 text-muted">&copy; Gamification-WP1 2018</p>
 </form>
 </body>

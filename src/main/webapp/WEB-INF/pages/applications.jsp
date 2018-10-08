@@ -55,17 +55,17 @@
                 <tr>
                     <th>${app.name}</th>
                     <td width="30%">${app.description}</td>
-                    <td width="20%">${app.appKey}</td>
+                    <td width="15%">${app.appKey}</td>
                     <td width="20%">${app.appToken}</td>
-                    <td class="text-center">
+                    <td width="20%" class="text-center">
                         <div class="dropdown">
                             <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown">
                                 Action
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <a href="/applications?action=edit&app_id=${app.id}" class="dropdown-item">Edit</a>
-                                <a href="/applications?action=delete&app_id=${app.id}" class="dropdown-item">Delete</a>
-                                <a href="/applications?action=regenerate&app_id=${app.id}" class="dropdown-item">Regenerate token</a>
+                                <a href="${pageContext.servletContext.contextPath}/applications?action=edit&app_id=${app.id}" class="dropdown-item">Edit</a>
+                                <a href="${pageContext.servletContext.contextPath}/applications?action=delete&app_id=${app.id}" class="dropdown-item">Delete</a>
+                                <a href="${pageContext.servletContext.contextPath}/applications?action=regenerate&app_id=${app.id}" class="dropdown-item">Regenerate token</a>
                             </div>
                         </div>
                     </td>
@@ -86,7 +86,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/applications" method="post">
+                <form action="${pageContext.servletContext.contextPath}/applications" method="post">
                     <input type="hidden" name="action" id="action" value="${not empty application ? "EDIT" : "CREATE"}">
                     <c:if test="${not empty application}">
                         <input type="hidden" id="app_id" name="app_id" value="${application.id}">
@@ -103,7 +103,7 @@
                             <input type="text" class="form-control" id="description" name="description" value="${application.description}" placeholder="Application description .. ">
                         </div>
                     </div>
-                    <a class="btn btn-secondary" href="/applications">Close</a>
+                    <a class="btn btn-secondary" href="${pageContext.servletContext.contextPath}/applications">Close</a>
                     <button type="submit" class="btn btn-primary">${not empty application ? "Update" : "Create"}</button>
                 </form>
                 <br>
