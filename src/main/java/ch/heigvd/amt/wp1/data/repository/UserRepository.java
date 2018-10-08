@@ -3,24 +3,22 @@ package ch.heigvd.amt.wp1.data.repository;
 import ch.heigvd.amt.wp1.data.Database;
 import ch.heigvd.amt.wp1.data.model.User;
 
-import javax.ejb.DependsOn;
-import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Singleton;
+import javax.annotation.Resource;
+import javax.ejb.Stateless;
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-@Singleton
-//@DependsOn("Database")
+@Stateless
 public class UserRepository {
 
     private final static String TABLE_NAME = "user";
 
-    //@EJB
-    private Database database = Database.getInstance();
+    @Resource(mappedName = "jdbc/amt")
+    private DataSource database;
 
     public User findByEmail(String email) {
         User user = new User();
