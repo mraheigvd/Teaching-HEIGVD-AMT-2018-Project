@@ -9,10 +9,10 @@ db:
     - ./db:/docker-entrypoint-initdb.d
 
 backend:
-  image: tomcat
+  image: glassfish:latest
   ports:
     - "9876:8080"
   volumes:
-  - ./Gamification-WP1.war:/usr/local/tomcat/webapps/Gamification-WP1.war
+  - ./Gamification-WP1.war:/usr/local/glassfish4/glassfish/domains/domain1/autodeploy/Gamification-WP1.war
   links:
     - db
