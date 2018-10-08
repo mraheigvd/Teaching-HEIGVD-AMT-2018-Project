@@ -2,23 +2,26 @@
 
 Here is the procedure for configuring a JDBC Connection Pools with Glassfish.
 
+First of all, you need to download the java mysql connector:
+
 ```
 wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.45.zip ~/Downloads/
 unzip ~/Downloads/mysql-connector-java-5.1.45.zip
 cp ~/Downloads/mysql-connector-java-5.1.45/mysql-connector-java-5.1.45-bin.jar /usr/local/Cellar/glassfish/5.0/libexec/glassfish/domains/domain1/lib/ext
 ```
 
-Go to the Glassfish via the default URL: http://localhost:4848
+Now, restart glassfish in order to take into account the new library.
+After that, go to the Glassfish administration area via the default URL: http://localhost:4848
 
-Then go to **Resources > JDBC > JDBC Connection Pools** and create a new pool 
+Then **Resources > JDBC > JDBC Connection Pools** and create a new pool:
 
 - Pool name: ``amtProductionPool``
 - Resource Type: ``javax.sql.DataSource``
 - Database Driver Vendor: ``MySQL``
 
-In **Datasource Classname** make sure to have **com.mysql.jdbc.jdbc2.optional.MysqlDataSource** and for **ping** click enabled.
+In **Datasource Classname** make sure to have **com.mysql.jdbc.jdbc2.optional.MysqlDataSource** and enable **ping** in order to see if the pool is correctly configured.
 
-In additional Properties add these properties:
+In additional Properties add these properties and adapt it to your context:
 
 - **user:** root
 - **password:** root
@@ -26,7 +29,7 @@ In additional Properties add these properties:
 - **hostname:** localhost
 - **port:** 3306
 
-When it's done, go to **Resources > JDBC > JDBC Resources** and create a new one with these properties:
+When it's done, go to **Resources > JDBC > JDBC Resources** and create a new resource with these properties:
 
 - **JNDI Name:** jdbc/amt
 - **Pool Name:** amtProductionPool
@@ -34,9 +37,10 @@ When it's done, go to **Resources > JDBC > JDBC Resources** and create a new one
 
 After that, restart you Glassfish server and try to run your application.
 
-You can now ask glassfish ton inject the MySQL DataSource into your code by doing this:
+You can now ask the container to inject the resource into your code by using the @Resource annotation with the **mappedName** as the **JNDI Name**:
 
 ```java
     @Resource(mappedName = "jdbc/amt")
     private DataSource database;
 ```
+
