@@ -4,6 +4,7 @@ import ch.heigvd.amt.wp1.data.model.User;
 import ch.heigvd.amt.wp1.data.repository.UserRepository;
 import ch.heigvd.amt.wp1.util.PasswordAuthentication;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +17,8 @@ import java.util.Map;
 @WebServlet(urlPatterns = "/profile")
 public class ProfileServlet extends HttpServlet {
 
-    private UserRepository userRepository = new UserRepository();
+    @EJB
+    private UserRepository userRepository;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Profile page requested");

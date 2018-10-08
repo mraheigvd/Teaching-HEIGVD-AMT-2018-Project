@@ -2,6 +2,9 @@ package ch.heigvd.amt.wp1.data;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
+import javax.ejb.Local;
+import javax.ejb.Singleton;
+import javax.ejb.Stateful;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -15,7 +18,7 @@ public class Database {
     private static Connection connection = null;
     private static Database instance = null;
 
-    private Database() throws SQLException {
+    public Database() throws SQLException {
         Properties props = new Properties();
 
         String fileName = "db.properties";

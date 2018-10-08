@@ -4,6 +4,7 @@ import ch.heigvd.amt.wp1.data.model.User;
 import ch.heigvd.amt.wp1.data.repository.UserRepository;
 import ch.heigvd.amt.wp1.util.PasswordAuthentication;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +17,10 @@ import java.util.Map;
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
 
-    private UserRepository userRepository = new UserRepository();
+    @EJB
+    private UserRepository userRepository;
+
+    private PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,7 +43,6 @@ public class LoginServlet extends HttpServlet {
         if (messages.isEmpty()) {
             // Find and try to authenticate the user
             User user = userRepository.findByEmail(email);
-            PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
             if (user != null && passwordAuthentication.authenticate(password.toCharArray(), user.getPassword())) {
                 System.out.println("Password chedk: " + passwordAuthentication.authenticate(password.toCharArray(), user.getPassword()));
                 request.getSession().setAttribute("user", user);

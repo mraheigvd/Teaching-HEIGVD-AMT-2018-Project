@@ -4,6 +4,10 @@ import ch.heigvd.amt.wp1.data.Database;
 import ch.heigvd.amt.wp1.data.model.Application;
 import ch.heigvd.amt.wp1.data.model.User;
 
+import javax.ejb.DependsOn;
+import javax.ejb.EJB;
+import javax.ejb.Local;
+import javax.ejb.Singleton;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,10 +15,13 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+@Singleton
+//@DependsOn("Database")
 public class ApplicationRepository {
 
     private final static String TABLE_NAME = "application";
 
+    //@EJB
     private Database database = Database.getInstance();
 
     public List<Application> findByUser(User user) {

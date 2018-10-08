@@ -4,6 +4,7 @@ import ch.heigvd.amt.wp1.data.model.User;
 import ch.heigvd.amt.wp1.data.repository.UserRepository;
 import ch.heigvd.amt.wp1.util.PasswordAuthentication;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +19,10 @@ import java.util.regex.Pattern;
 @WebServlet(urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
 
-    private UserRepository userRepository = new UserRepository();
+    @EJB
+    private UserRepository userRepository;
+
+    private PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(request, response);
@@ -56,7 +60,6 @@ public class RegisterServlet extends HttpServlet {
         // No errors, we can create the user
         if (errors.isEmpty() && !isEmailAlreadyTaken) {
             // Hash and save the user
-            PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
             String hashed_pass = passwordAuthentication.hash(password.toCharArray());
             System.out.println("Hashed pass: " + hashed_pass);
             User user = new User(email, firstname, lastname, hashed_pass, false, false, "");

@@ -5,6 +5,7 @@ import ch.heigvd.amt.wp1.data.model.User;
 import ch.heigvd.amt.wp1.data.repository.ApplicationRepository;
 import ch.heigvd.amt.wp1.util.PasswordAuthentication;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +20,8 @@ import java.util.Map;
 @WebServlet(urlPatterns = "/applications")
 public class ApplicationServlet extends HttpServlet {
 
-    private ApplicationRepository applicationRepository = new ApplicationRepository();
+    @EJB
+    private ApplicationRepository applicationRepository;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameterMap().containsKey("action") ? request.getParameter("action").toUpperCase() : "";
