@@ -29,7 +29,7 @@ There are many SaaS services that target application developers, just like our g
 | As an **administrator**, I can see a list of registered application developers, with their details. The user interface is designed to work well even if the application developer has created 1'000 applications (pagination). | FR                          | 0.5 |
 | As an **administrator**, I can suspend an account. When the developer tries to login, he is blocked and sees an informative error message. | FR                          | 0.5 |
 | As an **administrator**, I can reset a user password. The password is automatically generated and sent by e-mail to the application developer. When the developer logs in, he is obliged to change his password immediately. | FR |0.5|
-| As an **administrator** and **developer**, I can regenerate my api accesses (api_key and api_token). | FR |0.5|
+| **OK** - As an **administrator** and **developer**, I can regenerate my api accesses (api_key and api_token). | FR |0.5|
 | SPECIFY AND IMPLEMENT A FEATURE OF YOUR CHOICE. | FR |0.5|
 | | **Total** | **4.0** |
 | **OK** - As a **user**, I have a good UI/UX experience (nice design, clear navigation, informative error messages, etc.) | NFR-usability |0.5|
