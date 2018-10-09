@@ -1,18 +1,32 @@
 db:
   image: mysql:latest
+  container_name: amt_mysql
   environment:
     MYSQL_ROOT_PASSWORD: root
     MYSQL_DATABASE: amt_project
   ports:
-    - "3306:3306"
+    - "6666:3306"
   volumes:
     - ./db:/docker-entrypoint-initdb.d
+    - ./mysqld.cnf:/etc/mysql/conf.d/mysql.cnf
 
 backend:
   image: glassfish:latest
+  container_name: amt_glassfish
   ports:
     - "9876:8080"
+    - "9898:4848"
+  command: sh /glassfish-init.sh
   volumes:
-  - ./Gamification-WP1.war:/usr/local/glassfish4/glassfish/domains/domain1/autodeploy/Gamification-WP1.war
+    - ./Gamification-WP1.war:/usr/local/glassfish4/glassfish/domains/domain1/autodeploy/Gamification-WP1.war
+    - ./domain.xml:/usr/local/glassfish4/glassfish/domain.xml
+    - ./admin-keyfile:/usr/local/glassfish4/glassfish/admin-keyfile
+    - ./glassfish-init.sh:/glassfish-init.sh
+    #- ./domain.xml:/usr/local/glassfish4/glassfish/domains/domain1/config/domain.xml
+    #- ./domain.xml:/usr/local/glassfish4/glassfish/domains/domain1/config/domain.xml
+    - ./mysql-connector-java-5.1.34.jar:/usr/local/glassfish4/glassfish/lib/mysql-connector-java-5.1.34.jar
+    - ./mysql-connector-java-5.1.34.jar:/usr/local/glassfish4/glassfish/domains/domain1/lib/mysql-connector-java-5.1.34.jar
+    - ./mysql-connector-java-5.1.34.jar:/usr/local/glassfish4/glassfish/domains/domain1/lib/ext/mysql-connector-java-5.1.34.jar
+    - ./mysql-connector-java-5.1.34.jar:/usr/local/glassfish4/glassfish/domains/domain1/lib/databases/mysql-connector-java-5.1.34.jar
   links:
-    - db
+    - db:db_amt_mysql

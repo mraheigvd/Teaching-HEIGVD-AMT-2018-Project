@@ -16,7 +16,7 @@ After that, go to the Glassfish administration area via the default URL: http://
 Then **Resources > JDBC > JDBC Connection Pools** and create a new pool:
 
 - Pool name: ``amtProductionPool``
-- Resource Type: ``javax.sql.DataSource``
+- Resource Type: ``javax.sql.DataSource``****
 - Database Driver Vendor: ``MySQL``
 
 In **Datasource Classname** make sure to have **com.mysql.jdbc.jdbc2.optional.MysqlDataSource** and enable **ping** in order to see if the pool is correctly configured.

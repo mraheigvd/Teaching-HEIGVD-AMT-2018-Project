@@ -19,7 +19,7 @@ public class ApplicationRepository {
 
     private final static String TABLE_NAME = "application";
 
-    @Resource(mappedName = "jdbc/amt")
+    @Resource(lookup = "jdbc/amt")
     private DataSource database;
 
     //private Database database = Database.getInstance();

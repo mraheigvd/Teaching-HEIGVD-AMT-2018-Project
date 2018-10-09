@@ -17,7 +17,7 @@ public class UserRepository {
 
     private final static String TABLE_NAME = "user";
 
-    @Resource(mappedName = "jdbc/amt")
+    @Resource(lookup = "jdbc/amt")
     private DataSource database;
 
     public User findByEmail(String email) {
