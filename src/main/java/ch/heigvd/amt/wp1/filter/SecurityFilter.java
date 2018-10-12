@@ -19,6 +19,7 @@ public class SecurityFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        request.setCharacterEncoding("UTF-8");
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
 
