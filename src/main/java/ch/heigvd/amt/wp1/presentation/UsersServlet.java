@@ -31,9 +31,10 @@ public class UsersServlet extends HttpServlet {
         String action = request.getParameterMap().containsKey("action") ? request.getParameter("action").toUpperCase() : "";
 
         User user = (User) request.getSession().getAttribute("user");
-
+        System.out.println("TESTOLI");
         if (action.equals("RESET")) {
-            // reset du password...
+            String user_id = request.getParameter("user_id");
+            System.out.println("--- Reset the password of user with id : " + user_id + " ---");
         }
 
         List<User> users = userRepository.findAll();
