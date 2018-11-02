@@ -47,6 +47,30 @@ public class ApplicationRepository {
         return applications;
     }
 
+    public List<Application> findPageByUser(User user, int pageNbr, int nbrPerPages) {
+        List<Application> applications = new LinkedList<Application>();
+        try {
+            String sql = "SELECT * FROM " + TABLE_NAME +
+                    " INNER JOIN user_application ON user_application.fk_application = application.id " +
+                    "AND user_application.fk_user = ?"
+                    + " LIMIT " + ((pageNbr - 1) * nbrPerPages) + ", " + (pageNbr * nbrPerPages);
+            PreparedStatement prepare = database.getConnection().prepareStatement(sql);
+            prepare.setLong(1, user.getId());
+            ResultSet result = prepare.executeQuery();
+            while (result.next()) {
+                Application application = new Application(result.getInt("id"),
+                        result.getString("name"),
+                        result.getString("description"),
+                        result.getString("app_key"),
+                        result.getString("app_token"));
+                applications.add(application);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return applications;
+    }
+
     public Application findById(Long id) {
         Application application = null;
         try {
@@ -68,8 +92,28 @@ public class ApplicationRepository {
     }
 
     // Hint: http://java.avdiel.com/Tutorials/JDBCPaging.html
+    public List<Application> findPage(int pageNbr, int nbrPerPages) {
+        List<Application> applications = new LinkedList<>();
+        try {
+            String sql = "SELECT * FROM " + TABLE_NAME + " LIMIT " + ((pageNbr - 1) * nbrPerPages) + ", " + (pageNbr * nbrPerPages);
+            PreparedStatement prepare = database.getConnection().prepareStatement(sql);
+            ResultSet result = prepare.executeQuery();
+            while (result.next()) {
+                Application application = new Application(result.getInt("id"),
+                        result.getString("name"),
+                        result.getString("description"),
+                        result.getString("app_key"),
+                        result.getString("app_token"));
+                applications.add(application);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return applications;
+    }
+
     public List<Application> findAll() {
-        List<Application> applications = new LinkedList<Application>();
+        List<Application> applications = new LinkedList<>();
         try {
             String sql = "SELECT * FROM " + TABLE_NAME;
             PreparedStatement prepare = database.getConnection().prepareStatement(sql);

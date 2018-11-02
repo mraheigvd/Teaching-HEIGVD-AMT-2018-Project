@@ -74,6 +74,9 @@
             </tbody>
         </table>
     </div>
+    <div>
+        <!-- PAGES -->
+    </div>
 
 <!-- Modal -->
 <div class="modal fade" id="appModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

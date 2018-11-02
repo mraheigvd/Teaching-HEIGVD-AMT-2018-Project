@@ -19,6 +19,9 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = "/applications")
 public class ApplicationServlet extends HttpServlet {
+    //TODO
+    private int pageNbr = 1;
+    private int nbrPerPage = 3;
 
     @EJB
     private ApplicationRepository applicationRepository;
@@ -47,7 +50,7 @@ public class ApplicationServlet extends HttpServlet {
             request.setAttribute("application", app);
         }
 
-        List<Application> applications = applicationRepository.findByUser(user);
+        List<Application> applications = applicationRepository.findPageByUser(user, pageNbr, nbrPerPage);
         System.out.println(applications);
         request.setAttribute("applications", applications);
         request.getRequestDispatcher("/WEB-INF/pages/applications.jsp").forward(request, response);
@@ -72,7 +75,7 @@ public class ApplicationServlet extends HttpServlet {
             request.setAttribute(error.getKey(), error.getValue());
         }
 
-        List<Application> applications = applicationRepository.findByUser(user);
+        List<Application> applications = applicationRepository.findPageByUser(user, pageNbr, nbrPerPage);
         request.setAttribute("applications", applications);
         request.getRequestDispatcher("/WEB-INF/pages/applications.jsp").forward(request, response);
     }
