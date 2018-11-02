@@ -29,51 +29,49 @@
 
 
 
-    <br>
-    <div class="text-center">
-        <h3>List of applications</h3>
-    </div>
-    <!-- Button trigger modal -->
-    <div class="text-center">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#appModal">Create a new application</button>
-    </div>
+<br>
+<div class="text-center">
+    <h3>List of users</h3>
+</div>
+<!-- Button trigger modal -->
 
-    <br><br>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
+<br><br>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Firstname</th>
+            <th width="30%">Lastname</th>
+            <th width="20%">Email</th>
+            <th class="text-center">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${users}" var="user">
             <tr>
-                <th>Name</th>
-                <th width="30%">Description</th>
-                <th width="20%">App key</th>
-                <th width="20%">App token</th>
-                <th class="text-center">Action</th>
+                <td class="align-middle">${user.firstname}</td>
+                <td width="30%" class="align-middle">${user.lastname}</td>
+                <td width="15%" class="align-middle">${user.email}</td>
+                <td width="20%" class="text-center">
+                    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown">
+                        Action
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <a href="${pageContext.servletContext.contextPath}/users?action=disable&user_id=${user.id}" class="dropdown-item <c:if test="${user.isEnable}">text-danger</c:if> <c:if test="${!user.isEnable}">text-primary</c:if>">
+                            <c:if test="${user.isEnable}">
+                                DISABLE
+                            </c:if>
+                            <c:if test="${!user.isEnable}">
+                                ENABLE
+                            </c:if>
+                        </a>
+                    </div>
+                </td>
             </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${applications}" var="app">
-                <tr>
-                    <th>${app.name}</th>
-                    <td width="30%" class="align-middle">${app.description}</td>
-                    <td width="15%" class="align-middle">${app.appKey}</td>
-                    <td width="20%" class="align-middle">${app.appToken}</td>
-                    <td width="20%" class="text-center">
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown">
-                                Action
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <a href="${pageContext.servletContext.contextPath}/applications?action=edit&app_id=${app.id}" class="dropdown-item">Edit</a>
-                                <a href="${pageContext.servletContext.contextPath}/applications?action=delete&app_id=${app.id}" class="dropdown-item">Delete</a>
-                                <a href="${pageContext.servletContext.contextPath}/applications?action=regenerate&app_id=${app.id}" class="dropdown-item">Regenerate token</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-    </div>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="appModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -114,7 +112,7 @@
 
 <script>
     <c:if test="${not empty application}">
-        $('#appModal').modal();
+    $('#appModal').modal();
     </c:if>
 </script>
 <%@ include file="layout/footer.jsp" %>

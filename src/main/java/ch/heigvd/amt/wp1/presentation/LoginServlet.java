@@ -44,10 +44,14 @@ public class LoginServlet extends HttpServlet {
             // Find and try to authenticate the user
             User user = userRepository.findByEmail(email);
             if (user != null && passwordAuthentication.authenticate(password.toCharArray(), user.getPassword())) {
-                System.out.println("Password chedk: " + passwordAuthentication.authenticate(password.toCharArray(), user.getPassword()));
-                request.getSession().setAttribute("user", user);
-                response.sendRedirect(request.getContextPath() + "/profile");
-                return;
+                if (user.getIsEnable()) {
+                    System.out.println("Password chedk: " + passwordAuthentication.authenticate(password.toCharArray(), user.getPassword()));
+                    request.getSession().setAttribute("user", user);
+                    response.sendRedirect(request.getContextPath() + "/profile");
+                    return;
+                } else {
+                    request.setAttribute("account_disabled", "Your account has been blocked. Please contact the administrator.");
+                }
             } else {
                 messages.put("login", "Bad credentials, please try again");
             }

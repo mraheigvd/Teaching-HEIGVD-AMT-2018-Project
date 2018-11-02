@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="Teaching-HEIGVD-AMT-2018-Project:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="Gamification-WP1.war">
-      <element id="artifact" artifact-name="Teaching-HEIGVD-AMT-2018-Project:war exploded" />
-    </root>
-  </artifact>
-</component>

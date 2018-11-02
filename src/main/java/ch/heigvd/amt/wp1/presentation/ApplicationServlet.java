@@ -29,11 +29,9 @@ public class ApplicationServlet extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
 
         if (action.equals("DELETE")) {
-            System.out.println("DELETE ACTION");
             Long appId = Long.parseLong(request.getParameter("app_id"));
             applicationRepository.delete(applicationRepository.findById(appId), user);
         } else if (action.equals("REGENERATE")) {
-            System.out.println("REGENERATE ACTION");
             Long appId = Long.parseLong(request.getParameter("app_id"));
             Application app = applicationRepository.findById(appId);
             Application application = new Application(app.getId(), app.getName(),
@@ -48,7 +46,6 @@ public class ApplicationServlet extends HttpServlet {
         }
 
         List<Application> applications = applicationRepository.findByUser(user);
-        System.out.println(applications);
         request.setAttribute("applications", applications);
         request.getRequestDispatcher("/WEB-INF/pages/applications.jsp").forward(request, response);
     }
