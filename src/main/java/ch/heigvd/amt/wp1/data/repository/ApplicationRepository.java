@@ -71,6 +71,23 @@ public class ApplicationRepository {
         return applications;
     }
 
+    public int getCountByUser(User user) {
+        try {
+            String sql = "SELECT count(application.id) FROM " + TABLE_NAME +
+                    " INNER JOIN user_application ON user_application.fk_application = application.id " +
+                    "AND user_application.fk_user = ?";
+            PreparedStatement prepare = database.getConnection().prepareStatement(sql);
+            prepare.setLong(1, user.getId());
+            ResultSet result = prepare.executeQuery();
+            if (result.next()) {
+                return result.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public Application findById(Long id) {
         Application application = null;
         try {
