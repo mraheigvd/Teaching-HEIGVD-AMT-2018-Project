@@ -27,6 +27,18 @@ public class UsersServlet extends HttpServlet {
     @EJB
     private UserRepository userRepository;
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameterMap().containsKey("action") ? request.getParameter("action").toUpperCase() : "";
 
+        User user = (User) request.getSession().getAttribute("user");
 
+        if (action.equals("RESET")) {
+            // reset du password...
+        }
+
+        List<User> users = userRepository.findAll();
+        System.out.println(users);
+        request.setAttribute("users", users);
+        request.getRequestDispatcher("/WEB-INF/pages/users.jsp").forward(request, response);
+    }
 }
