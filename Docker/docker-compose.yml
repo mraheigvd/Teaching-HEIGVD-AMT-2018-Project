@@ -1,24 +1,20 @@
 version: '3'
 services:
   mysql:
-    image: mysql:latest
-    container_name: amt_mysql
+    build: ./mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: amt_project
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=amt_project
+    - MYSQL_PASSWORD=root
     ports:
-      - "3306:3306"
-    volumes:
-      - ./mysql:/docker-entrypoint-initdb.d
-      - ./mysqld.cnf:/etc/mysql/conf.d/mysql.cnf
-    command: --default-authentication-plugin=mysql_native_password
+    - "3306:3306"
   payara:
     build: ./payara5
     volumes:
     - ./../target/:/opt/payara5/deployments/
     ports:
-    - "9090:8080"
-    - "9898:4848"
+    - "8080:8080"
+    - "4848:4848"
     links:
     - mysql:db
   phpmyadmin:
@@ -26,6 +22,6 @@ services:
     environment:
     - MYSQL_ROOT_PASSWORD=root
     ports:
-    - "48888:80"
+    - "8888:80"
     links:
     - mysql:db
