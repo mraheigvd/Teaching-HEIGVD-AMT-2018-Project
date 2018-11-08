@@ -30,7 +30,7 @@ There are many SaaS services that target application developers, just like our g
 | **OK (LIONEL)** As an **administrator**, I can suspend an account. When the developer tries to login, he is blocked and sees an informative error message. | FR                          | 0.5 |
 | **NICOLE** As an **administrator**, I can reset a user password. The password is automatically generated and sent by e-mail to the application developer. When the developer logs in, he is obliged to change his password immediately. | FR |0.5|
 | **OK (MENTOR)** - As an **administrator** and **developer**, I can regenerate my api accesses (api_key and api_token). | FR |0.5|
-| SPECIFY AND IMPLEMENT A FEATURE OF YOUR CHOICE. | FR |0.5|
+| **Mentor** - As an user, I can reset my password. | FR |0.5|
 | | **Total** | **4.0** |
 | **OK (MENTOR)** - As a **user**, I have a good UI/UX experience (nice design, clear navigation, informative error messages, etc.) | NFR-usability |0.5|
 | **OK (MENTOR)** As a **spiritual guide**, I can clone the repo, move to a documented repository and type `docker-compose up` to start the system. I can then access it with my browser. | NFR-maintainability         | 0.5 |
