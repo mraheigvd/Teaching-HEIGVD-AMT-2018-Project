@@ -19,7 +19,7 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = "/applications")
 public class ApplicationServlet extends HttpServlet {
-    //TODO
+    //TODO set in session
     private int pageNbr = 1;
     private int nbrPerPage = 3;
 
@@ -51,8 +51,11 @@ public class ApplicationServlet extends HttpServlet {
         }
 
         List<Application> applications = applicationRepository.findPageByUser(user, pageNbr, nbrPerPage);
-        System.out.println(applications);
+        int totalAppCount = applicationRepository.getCountByUser(user);
         request.setAttribute("applications", applications);
+        request.setAttribute("nbrOfPage", ((int) Math.ceil(((double) totalAppCount) / nbrPerPage)));
+        request.setAttribute("pageNbr", pageNbr);
+        request.setAttribute("nbrPerPage", nbrPerPage);
         request.getRequestDispatcher("/WEB-INF/pages/applications.jsp").forward(request, response);
     }
 
@@ -61,6 +64,15 @@ public class ApplicationServlet extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
         Map<String, String> messages = new HashMap<>();
 
+
+        int totalAppCount = applicationRepository.getCountByUser(user);//TODO place in method
+        int totalPages = ((int) Math.ceil(((double) totalAppCount) / nbrPerPage));
+
+        System.out.println(request.getAttribute("pageNbr"));//TODO get from session
+        if(request.getAttribute("pageNbr") != null) pageNbr = (int) request.getAttribute("pageNbr");
+        if(pageNbr < 1) pageNbr = 1;
+        if(pageNbr > totalPages) pageNbr = totalPages;
+
         if (action.equals("CREATE")) {
             System.out.println("NEW ACTION");
             createApplication(user, request, messages);
@@ -68,7 +80,15 @@ public class ApplicationServlet extends HttpServlet {
             System.out.println("EDIT ACTION");
             editApplication(user, request, messages);
         } else {
-            System.out.println("NOTHING");
+            String firstPage = request.getParameter("firstPage");
+            String nextPage = request.getParameter("nextPage");
+            String previousPage = request.getParameter("previousPage");
+            String lastPage = request.getParameter("lastPage");
+
+            if(firstPage != null) pageNbr = 1;
+            if(nextPage != null && pageNbr < totalPages) pageNbr++;
+            if(previousPage != null && pageNbr > 1) pageNbr--;
+            if(lastPage != null) pageNbr = totalPages;
         }
 
         for (Map.Entry<String, String> error : messages.entrySet()) {
@@ -76,7 +96,10 @@ public class ApplicationServlet extends HttpServlet {
         }
 
         List<Application> applications = applicationRepository.findPageByUser(user, pageNbr, nbrPerPage);
+        request.setAttribute("nbrOfPage", totalPages);
         request.setAttribute("applications", applications);
+        request.setAttribute("pageNbr", pageNbr);
+        request.setAttribute("nbrPerPage", nbrPerPage);
         request.getRequestDispatcher("/WEB-INF/pages/applications.jsp").forward(request, response);
     }
 

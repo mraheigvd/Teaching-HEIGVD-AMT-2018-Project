@@ -25,7 +25,7 @@ public class ApplicationRepository {
     //private Database database = Database.getInstance();
 
     public List<Application> findByUser(User user) {
-        List<Application> applications = new LinkedList<Application>();
+        List<Application> applications = new LinkedList<>();
         try {
             String sql = "SELECT * FROM " + TABLE_NAME +
                     " INNER JOIN user_application ON user_application.fk_application = application.id " +
@@ -48,12 +48,13 @@ public class ApplicationRepository {
     }
 
     public List<Application> findPageByUser(User user, int pageNbr, int nbrPerPages) {
-        List<Application> applications = new LinkedList<Application>();
+        List<Application> applications = new LinkedList<>();
         try {
             String sql = "SELECT * FROM " + TABLE_NAME +
                     " INNER JOIN user_application ON user_application.fk_application = application.id " +
                     "AND user_application.fk_user = ?"
-                    + " LIMIT " + ((pageNbr - 1) * nbrPerPages) + ", " + (pageNbr * nbrPerPages);
+                    + " LIMIT " + nbrPerPages + " OFFSET " + ((pageNbr - 1) * nbrPerPages);
+
             PreparedStatement prepare = database.getConnection().prepareStatement(sql);
             prepare.setLong(1, user.getId());
             ResultSet result = prepare.executeQuery();
@@ -112,7 +113,8 @@ public class ApplicationRepository {
     public List<Application> findPage(int pageNbr, int nbrPerPages) {
         List<Application> applications = new LinkedList<>();
         try {
-            String sql = "SELECT * FROM " + TABLE_NAME + " LIMIT " + ((pageNbr - 1) * nbrPerPages) + ", " + (pageNbr * nbrPerPages);
+            String sql = "SELECT * FROM " + TABLE_NAME
+                    + " LIMIT " + nbrPerPages + " OFFSET " + ((pageNbr - 1) * nbrPerPages);
             PreparedStatement prepare = database.getConnection().prepareStatement(sql);
             ResultSet result = prepare.executeQuery();
             while (result.next()) {
