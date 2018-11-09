@@ -46,8 +46,8 @@
     <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    <a class="btn btn-lg btn-secondary btn-block" href="${pageContext.servletContext.contextPath}/register">Register</a>
+    <button id="buttonSignIn" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <a id="buttonRegister" class="btn btn-lg btn-secondary btn-block" href="${pageContext.servletContext.contextPath}/register">Register</a>
     <p class="mt-5 mb-3 text-muted">&copy; Gamification-WP1 2018</p>
 </form>
 </body>

@@ -36,18 +36,18 @@
     <div class="form-group row">
         <label for="firstname" class="col-sm-2 col-form-label">Firstname</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Firstname" value="${user.firstname}">
+            <input type="text" class="form-control" id="inputFirstname" name="firstname" placeholder="Firstname" value="${user.firstname}">
         </div>
     </div>
     <div class="form-group row">
         <label for="lastname" class="col-sm-2 col-form-label">Lastname</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Lastname" value="${user.lastname}">
+            <input type="text" class="form-control" id="inputLastname" name="lastname" placeholder="Lastname" value="${user.lastname}">
         </div>
     </div>
     <div class="form-group">
         <div class="text-center">
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button id="buttonUpdate" type="submit" class="btn btn-primary">Update</button>
         </div>
     </div>
 </form>

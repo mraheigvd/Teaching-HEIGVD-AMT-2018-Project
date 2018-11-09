@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                        <input type="text" name="firstname" class="form-control" id="name"
+                        <input type="text" name="firstname" class="form-control" id="inputFirstname"
                                placeholder="John" required autofocus>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                 <div class="form-group">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                        <input type="text" name="lastname" class="form-control" id="name"
+                        <input type="text" name="lastname" class="form-control" id="inputLastname"
                                placeholder="Doe" required autofocus>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                 <div class="form-group">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
-                        <input type="text" name="email" class="form-control" id="email"
+                        <input type="text" name="email" class="form-control" id="inputEmail"
                                placeholder="you@example.com" required autofocus>
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                 <div class="form-group has-danger">
                     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                         <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
-                        <input type="password" name="password" class="form-control" id="password"
+                        <input type="password" name="password" class="form-control" id="inputPassword"
                                placeholder="Password" required>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
                             <i class="fa fa-repeat"></i>
                         </div>
                         <input type="password" name="password-confirmation" class="form-control"
-                               id="password-confirm" placeholder="Password" required>
+                               id="inputConfirmPassword" placeholder="Password" required>
                     </div>
                 </div>
             </div>
@@ -149,7 +149,7 @@
         <div class="row">
             <div class="col-md-5"></div>
             <div class="col-md-2 text-center">
-                <button type="submit" class="tn btn-lg btn-primary btn-block"><i class="fa fa-user-plus"></i> Register</button>
+                <button id="buttonRegister" type="submit" class="tn btn-lg btn-primary btn-block"><i class="fa fa-user-plus"></i> Register</button>
             </div>
             <div class="col-md-5"></div>
         </div>

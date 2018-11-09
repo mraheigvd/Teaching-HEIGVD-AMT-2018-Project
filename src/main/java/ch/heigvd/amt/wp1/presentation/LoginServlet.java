@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
             User user = userRepository.findByEmail(email);
             if (user != null && passwordAuthentication.authenticate(password.toCharArray(), user.getPassword())) {
                 if (user.getIsEnable()) {
-                    System.out.println("Password chedk: " + passwordAuthentication.authenticate(password.toCharArray(), user.getPassword()));
+                    System.out.println("Password check: " + passwordAuthentication.authenticate(password.toCharArray(), user.getPassword()));
                     request.getSession().setAttribute("user", user);
                     response.sendRedirect(request.getContextPath() + "/profile");
                     return;
@@ -58,7 +58,6 @@ public class LoginServlet extends HttpServlet {
         }
 
         for (Map.Entry<String, String> error : messages.entrySet()) {
-            System.out.println(error.getKey());
             request.setAttribute(error.getKey(), error.getValue());
         }
         request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);

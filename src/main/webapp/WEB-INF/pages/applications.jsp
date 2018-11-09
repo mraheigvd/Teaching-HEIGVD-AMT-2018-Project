@@ -63,7 +63,7 @@
                                 Action
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <a href="${pageContext.servletContext.contextPath}/applications?action=edit&app_id=${app.id}" class="dropdown-item">Edit</a>
+                                <a href="${pageContext.servletContext.contextPath}/applications?action=edit&app_id=${app.id}" class="dropdown-item" id="dropdownEdit">Edit</a>
                                 <a href="${pageContext.servletContext.contextPath}/applications?action=delete&app_id=${app.id}" class="dropdown-item">Delete</a>
                                 <a href="${pageContext.servletContext.contextPath}/applications?action=regenerate&app_id=${app.id}" class="dropdown-item">Regenerate token</a>
                             </div>
@@ -80,8 +80,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="exampleModalLabel">Create a new application</h5>
+                <button id="buttonCreateNewApplication" type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -94,17 +94,17 @@
                     <div class="form-group">
                         <label class="control-label">Name:</label>
                         <div>
-                            <input type="text" class="form-control" id="name" name="name" value="${application.name}" placeholder="Application name .. ">
+                            <input type="text" class="form-control" id="inputApplicationName" name="name" value="${application.name}" placeholder="Application name .. ">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Description:</label>
                         <div>
-                            <input type="text" class="form-control" id="description" name="description" value="${application.description}" placeholder="Application description .. ">
+                            <input type="text" class="form-control" id="inputDescription" name="description" value="${application.description}" placeholder="Application description .. ">
                         </div>
                     </div>
                     <a class="btn btn-secondary" href="${pageContext.servletContext.contextPath}/applications">Close</a>
-                    <button type="submit" class="btn btn-primary">${not empty application ? "Update" : "Create"}</button>
+                    <button id="buttonConfirm" type="submit" class="btn btn-primary">${not empty application ? "Update" : "Create"}</button>
                 </form>
                 <br>
             </div>

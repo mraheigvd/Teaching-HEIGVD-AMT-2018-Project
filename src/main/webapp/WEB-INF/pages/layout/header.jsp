@@ -34,19 +34,19 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item <c:if test="${fn:contains(pageContext.request.requestURI, 'profile.jsp')}">active</c:if>" >
-                <a class="nav-link" href="${pageContext.servletContext.contextPath}/profile">Profile</a>
+                <a id="menuItemProfile" class="nav-link" href="${pageContext.servletContext.contextPath}/profile">Profile</a>
             </li>
             <li class="nav-item <c:if test="${fn:contains(pageContext.request.requestURI, 'applications.jsp')}">active</c:if>">
-                <a class="nav-link" href="${pageContext.servletContext.contextPath}/applications">Applications</a>
+                <a id="menuItemApplications" class="nav-link" href="${pageContext.servletContext.contextPath}/applications">Applications</a>
             </li>
             <c:if test="${user.getIsAdmin()}">
                 <li class="nav-item <c:if test="${fn:contains(pageContext.request.requestURI, 'users.jsp')}">active</c:if>">
-                    <a class="nav-link" href="${pageContext.servletContext.contextPath}/users">Users</a>
+                    <a id="menuItemUsers" class="nav-link" href="${pageContext.servletContext.contextPath}/users">Users</a>
                 </li>
             </c:if>
         </ul>
         <form class="form-inline">
-            <a href="${pageContext.servletContext.contextPath}/logout" class="btn btn-outline-info my-2 my-sm-0" role="button" aria-pressed="true">Logout</a>
+            <a id="menuItemLogout" href="${pageContext.servletContext.contextPath}/logout" class="btn btn-outline-info my-2 my-sm-0" role="button" aria-pressed="true">Logout</a>
         </form>
     </div>
 </nav>
