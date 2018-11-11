@@ -63,7 +63,7 @@
                             Action
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a href="${pageContext.servletContext.contextPath}/users?action=delete&user_id=${user.id}" class="dropdown-item">Reset password</a>
+                            <a href="${pageContext.servletContext.contextPath}/users?action=reset&user_id=${user.id}" class="dropdown-item">Reset password</a>
                         </div>
                     </div>
                 </td>

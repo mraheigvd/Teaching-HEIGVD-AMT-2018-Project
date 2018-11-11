@@ -46,6 +46,8 @@ public class LoginServlet extends HttpServlet {
             if (user != null && passwordAuthentication.authenticate(password.toCharArray(), user.getPassword())) {
                 System.out.println("Password chedk: " + passwordAuthentication.authenticate(password.toCharArray(), user.getPassword()));
                 request.getSession().setAttribute("user", user);
+
+                //TODO test if the user must change his password...
                 response.sendRedirect(request.getContextPath() + "/profile");
                 return;
             } else {

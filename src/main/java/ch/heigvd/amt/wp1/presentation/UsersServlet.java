@@ -4,9 +4,11 @@ import ch.heigvd.amt.wp1.data.model.Application;
 import ch.heigvd.amt.wp1.data.model.User;
 import ch.heigvd.amt.wp1.data.repository.ApplicationRepository;
 import ch.heigvd.amt.wp1.data.repository.UserRepository;
+import ch.heigvd.amt.wp1.util.EmailSender;
 import ch.heigvd.amt.wp1.util.PasswordAuthentication;
 
 import javax.ejb.EJB;
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,14 +29,29 @@ public class UsersServlet extends HttpServlet {
     @EJB
     private UserRepository userRepository;
 
+    @EJB
+    private EmailSender emailSender;
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameterMap().containsKey("action") ? request.getParameter("action").toUpperCase() : "";
 
         User user = (User) request.getSession().getAttribute("user");
-        System.out.println("TESTOLI");
+
         if (action.equals("RESET")) {
-            String user_id = request.getParameter("user_id");
-            System.out.println("--- Reset the password of user with id : " + user_id + " ---");
+            Long userId = Long.parseLong(request.getParameter("user_id"));
+            User userTargetted = userRepository.findById(userId);
+
+            final String newPassword = PasswordAuthentication.generateAlphanumString(8);
+            userTargetted.setPassword(newPassword);
+
+            final String body = "Dear " + userTargetted.getFirstname() + " " + userTargetted.getLastname() + ",\r\n\r\n" +
+                    "An admin requested a password reset for you. Please use this password for your next connection : " + newPassword + "\r\n\r\n" +
+                    "a new password will be ask on your next login. \r\n\r\n Your Gamification team.";
+            try {
+                emailSender.sendEmail(userTargetted.getEmail(), "Gamification password reset", body);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
         }
 
         List<User> users = userRepository.findAll();
