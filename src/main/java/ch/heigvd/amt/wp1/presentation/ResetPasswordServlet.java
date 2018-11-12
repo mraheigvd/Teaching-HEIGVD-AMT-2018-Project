@@ -47,9 +47,9 @@ public class ResetPasswordServlet extends HttpServlet {
         boolean loggedIn = request.getSession().getAttribute("user") != null;
         if (loggedIn && errors.isEmpty() && password.equals(passwordConfirmation)) {
             User user = (User) request.getSession().getAttribute("user");
-            /*user.setPassword(passwordAuthentication.hash(password.toCharArray()));
+            user.setPassword(passwordAuthentication.hash(password.toCharArray()));
             user.setPasswordIsExpired(false);
-            userRepository.update(user);*/
+            userRepository.update(user);
         } else {
             errors.put("password_error", "Password are not the same");
         }
