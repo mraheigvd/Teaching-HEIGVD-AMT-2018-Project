@@ -42,6 +42,11 @@
             ${passwordChanged}
         </div>
     </c:if>
+    <c:if test="${account_disabled != null}">
+        <div class="alert alert-danger" role="alert">
+            <strong>${account_disabled}</strong>
+        </div>
+    </c:if>
 
     <label for="inputEmail" class="sr-only">Email address</label>
     <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
