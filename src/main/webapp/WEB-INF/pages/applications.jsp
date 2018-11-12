@@ -54,9 +54,9 @@
                 <c:forEach items="${applications}" var="app">
                 <tr>
                     <th>${app.name}</th>
-                    <td width="30%">${app.description}</td>
-                    <td width="15%">${app.appKey}</td>
-                    <td width="20%">${app.appToken}</td>
+                    <td width="30%" class="align-middle">${app.description}</td>
+                    <td width="15%" class="align-middle">${app.appKey}</td>
+                    <td width="20%" class="align-middle">${app.appToken}</td>
                     <td width="20%" class="text-center">
                         <div class="dropdown">
                             <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown">
@@ -84,7 +84,7 @@
         </form>
     </div>
 
-<!-- Modal -->
+<!-- Modal -->w
 <div class="modal fade" id="appModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

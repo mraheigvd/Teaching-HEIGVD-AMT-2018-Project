@@ -34,11 +34,9 @@ public class ApplicationServlet extends HttpServlet {
         int totalPages = ((int) Math.ceil(((double) totalAppCount) / nbrPerPage));
 
         if (action.equals("DELETE")) {
-            System.out.println("DELETE ACTION");
             Long appId = Long.parseLong(request.getParameter("app_id"));
             applicationRepository.delete(applicationRepository.findById(appId), user);
         } else if (action.equals("REGENERATE")) {
-            System.out.println("REGENERATE ACTION");
             Long appId = Long.parseLong(request.getParameter("app_id"));
             Application app = applicationRepository.findById(appId);
             Application application = new Application(app.getId(), app.getName(),

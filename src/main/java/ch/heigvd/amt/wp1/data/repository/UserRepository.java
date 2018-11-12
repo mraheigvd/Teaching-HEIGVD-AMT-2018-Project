@@ -155,7 +155,7 @@ public class UserRepository {
         try {
             PreparedStatement statement = database.getConnection().prepareStatement(
                     "UPDATE " +
-                            TABLE_NAME +" SET is_enable = ?, " +
+                            TABLE_NAME +" SET is_enable = ? " +
                             "WHERE id = ?"
             );
             statement.setBoolean(1, false);
