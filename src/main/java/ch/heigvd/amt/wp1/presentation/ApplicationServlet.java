@@ -19,9 +19,8 @@ import java.util.Map;
 
 @WebServlet(urlPatterns = "/applications")
 public class ApplicationServlet extends HttpServlet {
-    //TODO set in session
     private int pageNbr = 1;
-    private int nbrPerPage = 3;
+    private int nbrPerPage = 3;//TODO change or get from input in jsp
 
     @EJB
     private ApplicationRepository applicationRepository;
@@ -30,6 +29,9 @@ public class ApplicationServlet extends HttpServlet {
         String action = request.getParameterMap().containsKey("action") ? request.getParameter("action").toUpperCase() : "";
 
         User user = (User) request.getSession().getAttribute("user");
+
+        int totalAppCount = applicationRepository.getCountByUser(user);
+        int totalPages = ((int) Math.ceil(((double) totalAppCount) / nbrPerPage));
 
         if (action.equals("DELETE")) {
             System.out.println("DELETE ACTION");
@@ -50,12 +52,7 @@ public class ApplicationServlet extends HttpServlet {
             request.setAttribute("application", app);
         }
 
-        List<Application> applications = applicationRepository.findPageByUser(user, pageNbr, nbrPerPage);
-        int totalAppCount = applicationRepository.getCountByUser(user);
-        request.setAttribute("applications", applications);
-        request.setAttribute("nbrOfPage", ((int) Math.ceil(((double) totalAppCount) / nbrPerPage)));
-        request.setAttribute("pageNbr", pageNbr);
-        request.setAttribute("nbrPerPage", nbrPerPage);
+        pagination(request, user, totalPages);
         request.getRequestDispatcher("/WEB-INF/pages/applications.jsp").forward(request, response);
     }
 
@@ -64,11 +61,9 @@ public class ApplicationServlet extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
         Map<String, String> messages = new HashMap<>();
 
-
-        int totalAppCount = applicationRepository.getCountByUser(user);//TODO place in method
+        int totalAppCount = applicationRepository.getCountByUser(user);
         int totalPages = ((int) Math.ceil(((double) totalAppCount) / nbrPerPage));
 
-        System.out.println(request.getAttribute("pageNbr"));//TODO get from session
         if(request.getAttribute("pageNbr") != null) pageNbr = (int) request.getAttribute("pageNbr");
         if(pageNbr < 1) pageNbr = 1;
         if(pageNbr > totalPages) pageNbr = totalPages;
@@ -95,11 +90,7 @@ public class ApplicationServlet extends HttpServlet {
             request.setAttribute(error.getKey(), error.getValue());
         }
 
-        List<Application> applications = applicationRepository.findPageByUser(user, pageNbr, nbrPerPage);
-        request.setAttribute("nbrOfPage", totalPages);
-        request.setAttribute("applications", applications);
-        request.setAttribute("pageNbr", pageNbr);
-        request.setAttribute("nbrPerPage", nbrPerPage);
+        pagination(request, user, totalPages);
         request.getRequestDispatcher("/WEB-INF/pages/applications.jsp").forward(request, response);
     }
 
@@ -159,6 +150,15 @@ public class ApplicationServlet extends HttpServlet {
             return application;
         }
         return null;
+    }
+
+
+    public void pagination(HttpServletRequest request, User user, int totalPages) {
+        List<Application> applications = applicationRepository.findPageByUser(user, pageNbr, nbrPerPage);
+        request.setAttribute("nbrOfPage", totalPages);
+        request.setAttribute("applications", applications);
+        request.setAttribute("pageNbr", pageNbr);
+        request.setAttribute("nbrPerPage", nbrPerPage);
     }
 
 }

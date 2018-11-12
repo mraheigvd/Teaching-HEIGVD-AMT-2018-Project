@@ -53,10 +53,12 @@ public class ApplicationRepository {
             String sql = "SELECT * FROM " + TABLE_NAME +
                     " INNER JOIN user_application ON user_application.fk_application = application.id " +
                     "AND user_application.fk_user = ?"
-                    + " LIMIT " + nbrPerPages + " OFFSET " + ((pageNbr - 1) * nbrPerPages);
+                    + " LIMIT ? OFFSET ?";
 
             PreparedStatement prepare = database.getConnection().prepareStatement(sql);
             prepare.setLong(1, user.getId());
+            prepare.setInt(2, nbrPerPages);
+            prepare.setInt(3, (pageNbr - 1) * nbrPerPages);
             ResultSet result = prepare.executeQuery();
             while (result.next()) {
                 Application application = new Application(result.getInt("id"),
@@ -109,13 +111,13 @@ public class ApplicationRepository {
         return application;
     }
 
-    // Hint: http://java.avdiel.com/Tutorials/JDBCPaging.html
     public List<Application> findPage(int pageNbr, int nbrPerPages) {
         List<Application> applications = new LinkedList<>();
         try {
-            String sql = "SELECT * FROM " + TABLE_NAME
-                    + " LIMIT " + nbrPerPages + " OFFSET " + ((pageNbr - 1) * nbrPerPages);
+            String sql = "SELECT * FROM " + TABLE_NAME + " LIMIT ? OFFSET ?";
             PreparedStatement prepare = database.getConnection().prepareStatement(sql);
+            prepare.setInt(1, nbrPerPages);
+            prepare.setInt(2, (pageNbr - 1) * nbrPerPages);
             ResultSet result = prepare.executeQuery();
             while (result.next()) {
                 Application application = new Application(result.getInt("id"),
