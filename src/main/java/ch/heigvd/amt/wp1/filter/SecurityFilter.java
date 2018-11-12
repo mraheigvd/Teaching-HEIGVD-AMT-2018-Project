@@ -23,7 +23,7 @@ public class SecurityFilter implements Filter {
         HttpSession session = request.getSession(false);
 
         // Don't filter resources and registration page
-        if (request.getRequestURI().matches(".*(css|jpg|png|gif|js|register)$")) {
+        if (request.getRequestURI().matches(".*(css|jpg|png|gif|js|register|reset)$")) {
             filterChain.doFilter(servletRequest, servletResponse);
             System.out.println("SecurityFilter => Resources or basic pages asked");
             return;
@@ -40,10 +40,11 @@ public class SecurityFilter implements Filter {
             if (loggedIn) {
                 System.out.println("SecurityFilter => User already logged");
 
+                User user = (User) session.getAttribute("user");
+
                 // Protect ADMIN area
                 if (request.getRequestURI().contains(request.getContextPath() + "/admin/")) {
                     System.out.println("Contains : " + request.getContextPath() + "/admin/");
-                    User user = (User) session.getAttribute("user");
                     if (user != null && user.getIsAdmin()) {
                         filterChain.doFilter(request, servletResponse);
                     } else {
@@ -52,6 +53,12 @@ public class SecurityFilter implements Filter {
                 } else {
                     if (request.getRequestURI().endsWith("/"))
                         httpResponse.sendRedirect(request.getContextPath() + "/profile");
+
+                    System.out.println(user);
+                    if (user.getPasswordIsExpired()) {
+                        httpResponse.sendRedirect(request.getContextPath() + "/reset");
+                        return;
+                    }
 
                     filterChain.doFilter(request, servletResponse);
                 }

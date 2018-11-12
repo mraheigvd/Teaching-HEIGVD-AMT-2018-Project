@@ -47,8 +47,12 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("Password chedk: " + passwordAuthentication.authenticate(password.toCharArray(), user.getPassword()));
                 request.getSession().setAttribute("user", user);
 
-                //TODO test if the user must change his password...
-                response.sendRedirect(request.getContextPath() + "/profile");
+                if(user.getPasswordIsExpired()){
+                    response.sendRedirect(request.getContextPath() + "/reset");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/profile");
+                }
+
                 return;
             } else {
                 messages.put("login", "Bad credentials, please try again");

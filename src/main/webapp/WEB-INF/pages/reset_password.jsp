@@ -18,24 +18,24 @@
 </head>
 
 <body class="text-center">
-<form class="form-signin" method="post" action="${pageContext.servletContext.contextPath}/login">
+<form class="form-signin" method="post" action="${pageContext.servletContext.contextPath}/reset">
     <img class="mb-4" src="" alt="" width="72" height="72">
     <h1>Gamification W1</h1>
     <h3 class="h3 mb-3 font-weight-normal">Please change your password.</h3>
-    <c:if test="${newPassword != null}">
+    <c:if test="${password_error != null}">
         <div class="alert alert-danger" role="alert">
-            <strong>Oh!</strong> ${newPassword}
+            <strong>Oh!</strong> ${password_error}
         </div>
     </c:if>
-    <c:if test="${confirmPassword != null}">
+    <c:if test="${password_confirmation_error != null}">
         <div class="alert alert-danger" role="alert">
-            <strong>Oh!</strong> ${confirmPassword}
+            <strong>Oh!</strong> ${password_confirmation_error}
         </div>
     </c:if>
-    <label for="inputNewPassword" class="sr-only">New password</label>
-    <input type="password" id="inputNewPassword" name="newPassword" class="form-control" placeholder="New password" required autofocus>
-    <label for="inputConfirmPassword" class="sr-only">Confirm new password</label>
-    <input type="password" id="inputConfirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm new password" required autofocus>
+    <label for="password" class="sr-only">New password</label>
+    <input type="password" id="password" name="password" class="form-control" placeholder="New password" required autofocus>
+    <label for="password-confirmation" class="sr-only">Confirm new password</label>
+    <input type="password" id="password-confirmation" name="password-confirmation" class="form-control" placeholder="Confirm new password" required autofocus>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Change password</button>
     <p class="mt-5 mb-3 text-muted">&copy; Gamification-WP1 2018</p>
 </form>

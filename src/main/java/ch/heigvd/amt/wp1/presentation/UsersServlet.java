@@ -32,6 +32,8 @@ public class UsersServlet extends HttpServlet {
     @EJB
     private EmailSender emailSender;
 
+    private PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameterMap().containsKey("action") ? request.getParameter("action").toUpperCase() : "";
 
@@ -42,7 +44,9 @@ public class UsersServlet extends HttpServlet {
             User userTargetted = userRepository.findById(userId);
 
             final String newPassword = PasswordAuthentication.generateAlphanumString(8);
-            userTargetted.setPassword(newPassword);
+            userTargetted.setPassword(passwordAuthentication.hash(newPassword.toCharArray()));
+            userTargetted.setPasswordIsExpired(true);
+            userRepository.update(userTargetted);
 
             final String body = "Dear " + userTargetted.getFirstname() + " " + userTargetted.getLastname() + ",\r\n\r\n" +
                     "An admin requested a password reset for you. Please use this password for your next connection : " + newPassword + "\r\n\r\n" +

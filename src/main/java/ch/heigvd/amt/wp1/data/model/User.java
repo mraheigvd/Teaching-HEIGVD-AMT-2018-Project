@@ -10,12 +10,13 @@ public class User {
     private Boolean isAdmin;
     private Boolean isEnable;
     private String tokenValidate;
+    private Boolean password_is_expired;
 
     public User() {
 
     }
 
-    public User(String email, String firstname, String lastname, String password, Boolean isAdmin, Boolean isEnable, String tokenValidate) {
+    public User(String email, String firstname, String lastname, String password, Boolean isAdmin, Boolean isEnable, String tokenValidate, Boolean password_is_expired) {
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -23,6 +24,7 @@ public class User {
         this.isAdmin = isAdmin;
         this.isEnable = isEnable;
         this.tokenValidate = tokenValidate;
+        this.password_is_expired = password_is_expired;
     }
 
     public User(Integer id, String email, String firstname, String lastname, String password) {
@@ -108,6 +110,13 @@ public class User {
         this.tokenValidate = tokenValidation;
     }
 
+    public Boolean getPasswordIsExpired() {
+        return password_is_expired;
+    }
+
+    public void setPasswordIsExpired(Boolean password_is_expired) {
+        this.password_is_expired = password_is_expired;
+    }
 
     @Override
     public String toString() {
@@ -120,6 +129,7 @@ public class User {
                 ", isAdmin=" + isAdmin +
                 ", isEnable=" + isEnable +
                 ", tokenValidate='" + tokenValidate + '\'' +
+                ", passwordIsExpired='" + password_is_expired + '\'' +
                 '}';
     }
 }
