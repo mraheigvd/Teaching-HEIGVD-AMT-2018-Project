@@ -47,7 +47,13 @@ public class LoginServlet extends HttpServlet {
                 if (user.getIsEnable()) {
                     System.out.println("Password check: " + passwordAuthentication.authenticate(password.toCharArray(), user.getPassword()));
                     request.getSession().setAttribute("user", user);
-                    response.sendRedirect(request.getContextPath() + "/profile");
+
+                    if(user.getPasswordIsExpired()){
+                        response.sendRedirect(request.getContextPath() + "/reset");
+                    } else {
+                        response.sendRedirect(request.getContextPath() + "/profile");
+                    }
+
                     return;
                 } else {
                     request.setAttribute("account_disabled", "Your account has been blocked. Please contact the administrator.");

@@ -65,6 +65,7 @@
                                 ENABLE
                             </c:if>
                         </a>
+                        <a href="${pageContext.servletContext.contextPath}/users?action=reset&user_id=${user.id}" class="dropdown-item">Reset password</a>
                     </div>
                 </td>
             </tr>

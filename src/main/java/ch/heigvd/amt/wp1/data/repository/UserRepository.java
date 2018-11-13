@@ -35,6 +35,7 @@ public class UserRepository {
                 user.setIsAdmin(result.getBoolean("is_admin"));
                 user.setIsEnable(result.getBoolean("is_enable"));
                 user.setTokenValidate(result.getString("token_validate"));
+                user.setPasswordIsExpired(result.getBoolean("password_is_expired"));
                 System.out.println(user);
                 return user;
             }
@@ -59,6 +60,7 @@ public class UserRepository {
                 user.setIsAdmin(result.getBoolean("is_admin"));
                 user.setIsEnable(result.getBoolean("is_enable"));
                 user.setTokenValidate(result.getString("token_validate"));
+                user.setPasswordIsExpired(result.getBoolean("password_is_expired"));
                 return user;
             }
         } catch (SQLException e) {
@@ -83,6 +85,7 @@ public class UserRepository {
                 user.setIsAdmin(result.getBoolean("is_admin"));
                 user.setIsEnable(result.getBoolean("is_enable"));
                 user.setTokenValidate(result.getString("token_validate"));
+                user.setPasswordIsExpired(result.getBoolean("password_is_expired"));
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -128,7 +131,8 @@ public class UserRepository {
                     "password = ?, " +
                     "is_admin = ?, " +
                     "is_enable = ?, " +
-                    "token_validate = ? " +
+                    "token_validate = ?, " +
+                    "password_is_expired = ? " +
                     "WHERE id = ?";
             PreparedStatement statement = database.getConnection().prepareStatement(sql);
             statement.setString(1, user.getEmail());
@@ -138,8 +142,10 @@ public class UserRepository {
             statement.setBoolean(5, user.getIsAdmin());
             statement.setBoolean(6, user.getIsEnable());
             statement.setString(7, user.getTokenValidate());
-            statement.setLong(8, user.getId());
+            statement.setBoolean(8, user.getPasswordIsExpired());
+            statement.setLong(9, user.getId());
 
+            System.out.println("REQUESTSQL : " + sql);
             //verifie le resultat de l'execution de la requete SQL
             if (statement.executeUpdate() == 0) {
                 throw new SQLException("Updates failed");

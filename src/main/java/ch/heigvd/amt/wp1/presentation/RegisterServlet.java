@@ -62,7 +62,7 @@ public class RegisterServlet extends HttpServlet {
             // Hash and save the user
             String hashed_pass = passwordAuthentication.hash(password.toCharArray());
             System.out.println("Hashed pass: " + hashed_pass);
-            User user = new User(email, firstname, lastname, hashed_pass, false, false, "");
+            User user = new User(email, firstname, lastname, hashed_pass, false, false, "", false);
             user.setIsEnable(true);
             user = userRepository.create(user);
 

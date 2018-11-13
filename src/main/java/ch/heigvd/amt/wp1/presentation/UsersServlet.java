@@ -4,9 +4,11 @@ import ch.heigvd.amt.wp1.data.model.Application;
 import ch.heigvd.amt.wp1.data.model.User;
 import ch.heigvd.amt.wp1.data.repository.ApplicationRepository;
 import ch.heigvd.amt.wp1.data.repository.UserRepository;
+import ch.heigvd.amt.wp1.util.EmailSender;
 import ch.heigvd.amt.wp1.util.PasswordAuthentication;
 
 import javax.ejb.EJB;
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +25,7 @@ import java.util.Map;
 public class UsersServlet extends HttpServlet {
 
     final String DISABLE = "DISABLE";
+    final String RESET = "RESET";
 
     @EJB
     private ApplicationRepository applicationRepository;
@@ -30,6 +33,10 @@ public class UsersServlet extends HttpServlet {
     @EJB
     private UserRepository userRepository;
 
+    @EJB
+    private EmailSender emailSender;
+
+    private PasswordAuthentication passwordAuthentication = new PasswordAuthentication();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,6 +52,23 @@ public class UsersServlet extends HttpServlet {
             if (userId != null) {
                 //find the user by his/her id and disable him/her
                 userRepository.disable(userRepository.findById(userId));
+            }
+        } else if (action.equals(RESET)) {
+            Long userId = Long.parseLong(request.getParameter("user_id"));
+            User userTargetted = userRepository.findById(userId);
+
+            final String newPassword = PasswordAuthentication.generateAlphanumString(8);
+            userTargetted.setPassword(passwordAuthentication.hash(newPassword.toCharArray()));
+            userTargetted.setPasswordIsExpired(true);
+            userRepository.update(userTargetted);
+
+            final String body = "Dear " + userTargetted.getFirstname() + " " + userTargetted.getLastname() + ",\r\n\r\n" +
+                    "An admin requested a password reset for you. Please use this password for your next connection : " + newPassword + "\r\n\r\n" +
+                    "a new password will be ask on your next login. \r\n\r\n Your Gamification team.";
+            try {
+                emailSender.sendEmail(userTargetted.getEmail(), "Gamification password reset", body);
+            } catch (MessagingException e) {
+                e.printStackTrace();
             }
         }
 
