@@ -5,12 +5,12 @@
 <br>
 
 <c:if test="${not empty name_error}">
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger" role="alert" id="failureNameMessage">
         <strong>Oh!</strong> ${name_error}
     </div>
 </c:if>
 <c:if test="${not empty description_error}">
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger" role="alert" id="failureDescriptionMessage">
         <strong>Oh!</strong> ${description_error}
     </div>
 </c:if>
@@ -20,7 +20,7 @@
     </div>
 </c:if>
 <c:if test="${not empty success}">
-    <div class="alert alert-success" role="alert">
+    <div class="alert alert-success" role="alert" id="successMessage">
         <strong>Yeah!</strong> ${success}
     </div>
 </c:if>
@@ -35,7 +35,7 @@
     </div>
     <!-- Button trigger modal -->
     <div class="text-center">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#appModal">Create a new application</button>
+        <button type="button" id="buttonCreateNewApplication" class="btn btn-primary" data-toggle="modal" data-target="#appModal">Create a new application</button>
     </div>
 
     <br><br>
@@ -52,7 +52,7 @@
             </thead>
             <tbody>
                 <c:forEach items="${applications}" var="app">
-                <tr>
+                <tr class="application">
                     <th>${app.name}</th>
                     <td width="30%" class="align-middle">${app.description}</td>
                     <td width="15%" class="align-middle">${app.appKey}</td>
@@ -63,7 +63,7 @@
                                 Action
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <a href="${pageContext.servletContext.contextPath}/applications?action=edit&app_id=${app.id}" class="dropdown-item" id="dropdownEdit">Edit</a>
+                                <a href="${pageContext.servletContext.contextPath}/applications?action=edit&app_id=${app.id}" class="dropdown-item dropdownEdit">Edit</a>
                                 <a href="${pageContext.servletContext.contextPath}/applications?action=delete&app_id=${app.id}" class="dropdown-item">Delete</a>
                                 <a href="${pageContext.servletContext.contextPath}/applications?action=regenerate&app_id=${app.id}" class="dropdown-item">Regenerate token</a>
                             </div>
@@ -81,7 +81,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Create a new application</h5>
-                <button id="buttonCreateNewApplication" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
