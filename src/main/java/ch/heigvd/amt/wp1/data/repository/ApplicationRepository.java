@@ -45,7 +45,7 @@ public class ApplicationRepository {
             e.printStackTrace();
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -66,6 +66,7 @@ public class ApplicationRepository {
             prepare.setLong(1, user.getId());
             prepare.setInt(2, nbrPerPages);
             prepare.setInt(3, (pageNbr - 1) * nbrPerPages);
+            System.out.println(sql);
             ResultSet result = prepare.executeQuery();
             while (result.next()) {
                 Application application = new Application(result.getInt("id"),
@@ -79,7 +80,7 @@ public class ApplicationRepository {
             e.printStackTrace();
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -104,7 +105,7 @@ public class ApplicationRepository {
             e.printStackTrace();
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -132,7 +133,7 @@ public class ApplicationRepository {
             e.printStackTrace();
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -162,7 +163,7 @@ public class ApplicationRepository {
             e.printStackTrace();
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -190,7 +191,7 @@ public class ApplicationRepository {
             e.printStackTrace();
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -227,9 +228,8 @@ public class ApplicationRepository {
             int key = keys.getInt(1);
             application.setId(key);
 
-
             // Create the application
-            PreparedStatement statement2 = database.getConnection().prepareStatement(
+            PreparedStatement statement2 = connection.prepareStatement(
                     "INSERT INTO user_application (fk_user, fk_application) " +
                             "VALUES(?, ?)"
             );
@@ -247,7 +247,7 @@ public class ApplicationRepository {
             throw new RuntimeException(e);
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -274,7 +274,7 @@ public class ApplicationRepository {
                         "app_key = ?, " +
                         "app_token = ? " +
                         "WHERE id = ?";
-                PreparedStatement statement = database.getConnection().prepareStatement(sql);
+                PreparedStatement statement = connection.prepareStatement(sql);
                 statement.setString(1, application.getName());
                 statement.setString(2, application.getDescription());
                 statement.setString(3, application.getAppKey());
@@ -293,7 +293,7 @@ public class ApplicationRepository {
             e.printStackTrace();
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -317,7 +317,7 @@ public class ApplicationRepository {
                 }
 
                 sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
-                PreparedStatement prepare2 = database.getConnection().prepareStatement(sql);
+                PreparedStatement prepare2 = connection.prepareStatement(sql);
                 prepare2.setLong(1, application.getId());
 
                 if (prepare2.executeUpdate() == 0) {
@@ -330,7 +330,7 @@ public class ApplicationRepository {
                 return false;
             } finally {
                 try {
-                    connection.close();
+                    if (connection != null) connection.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
