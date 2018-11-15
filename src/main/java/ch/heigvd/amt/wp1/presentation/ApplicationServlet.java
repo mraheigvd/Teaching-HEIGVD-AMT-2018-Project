@@ -30,7 +30,7 @@ public class ApplicationServlet extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
 
         int totalAppCount = applicationRepository.getCountByUser(user);
-        int totalPages = ((int) Math.ceil(((double) totalAppCount) / nbrPerPage));
+        int totalPages = Math.max(((int) Math.ceil(((double) totalAppCount) / nbrPerPage)), 1);
 
         if (action.equals("DELETE")) {
             Long appId = Long.parseLong(request.getParameter("app_id"));
