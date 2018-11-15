@@ -218,9 +218,6 @@ public class ApplicationRepository {
                 throw new SQLException("Error");
             }
 
-            throw new SQLException("BOOM");
-
-            /*
             ResultSet keys = statement.getGeneratedKeys();
 
             int count = 0;
@@ -243,18 +240,18 @@ public class ApplicationRepository {
                 throw new SQLException("Updates failed");
             }
 
-            return application;*/
+            return application;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         } finally {
             try {
                 connection.close();
+                return null;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        //return null;
     }
 
     public boolean update(Application application, User user) {

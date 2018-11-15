@@ -18,7 +18,6 @@ public class EmailSender {
     @Resource(name = "java/mail/swhp")
     Session mailSession;
 
-
     /**
      * Send a mail
      *
