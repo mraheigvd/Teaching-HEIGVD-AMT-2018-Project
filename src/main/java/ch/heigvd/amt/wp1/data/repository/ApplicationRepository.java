@@ -200,6 +200,7 @@ public class ApplicationRepository {
 
     public Application create(Application application, User user) {
         Connection connection = null;
+
         try {
             // Create the application
             connection = database.getConnection();
@@ -247,7 +248,6 @@ public class ApplicationRepository {
         } finally {
             try {
                 connection.close();
-                return null;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
