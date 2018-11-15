@@ -1,8 +1,8 @@
 
 
-#Teaching-HEIGVD-AMT-2018-Project
+# Teaching-HEIGVD-AMT-2018-Project
 
-##Testing non functional transactions
+## Testing non functional transactions
 
 ### Introduction
 
