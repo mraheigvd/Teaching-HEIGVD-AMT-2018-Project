@@ -59,7 +59,7 @@ public class ApplicationServlet extends HttpServlet {
         Map<String, String> messages = new HashMap<>();
 
         int totalAppCount = applicationRepository.getCountByUser(user);
-        int totalPages = ((int) Math.ceil(((double) totalAppCount) / nbrPerPage));
+        int totalPages = Math.max(((int) Math.ceil(((double) totalAppCount) / nbrPerPage)), 1);
 
         if(request.getAttribute("pageNbr") != null) pageNbr = (int) request.getAttribute("pageNbr");
         if(pageNbr < 1) pageNbr = 1;

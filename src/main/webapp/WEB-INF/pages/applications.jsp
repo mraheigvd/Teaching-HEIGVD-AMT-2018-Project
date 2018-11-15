@@ -80,7 +80,7 @@
             <button type="submit" class="btn btn-primary" name="firstPage" <c:if test="${pageNbr == 1}">disabled</c:if>>first page</button>
             <button type="submit" id="previousPage" class="btn btn-primary" name="previousPage" <c:if test="${pageNbr <= 1}">disabled</c:if>>previous page</button>
             <button type="submit" id="nextPage" class="btn btn-primary" name="nextPage" <c:if test="${pageNbr >= nbrOfPage}">disabled</c:if>>next page</button>
-            <button type="submit" class="btn btn-primary" name="lastPage" <c:if test="${pageNbr == nbrOfpage}">disabled</c:if>>last page</button>
+            <button type="submit" class="btn btn-primary" name="lastPage" <c:if test="${pageNbr == nbrOfPage}">disabled</c:if>>last page</button>
         </form>
     </div>
 
