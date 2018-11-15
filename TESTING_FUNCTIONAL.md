@@ -113,3 +113,7 @@ Then it open each of the 3 applications pages.
 Lastly it logout and try to open directly the third applications page but is automatically redirected to the login page.
 
 ![scenario_6](md_images/scenario_6.png)
+
+### Results
+
+![functional_tests_result](/Users/lionelnanchen/Documents/HEIG-VD/Semestre_5/AMT/AMT_Laboratoires/Teaching-HEIGVD-AMT-2018-Project/md_images/functional_tests_result.png)
