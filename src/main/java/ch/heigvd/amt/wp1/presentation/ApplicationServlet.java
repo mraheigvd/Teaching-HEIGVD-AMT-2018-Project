@@ -4,7 +4,6 @@ import ch.heigvd.amt.wp1.data.model.Application;
 import ch.heigvd.amt.wp1.data.model.User;
 import ch.heigvd.amt.wp1.data.repository.ApplicationRepository;
 import ch.heigvd.amt.wp1.util.PasswordAuthentication;
-
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +19,7 @@ import java.util.Map;
 @WebServlet(urlPatterns = "/applications")
 public class ApplicationServlet extends HttpServlet {
     private int pageNbr = 1;
-    private int nbrPerPage = 3;//TODO change or get from input in jsp
+    private int nbrPerPage = 10;
 
     @EJB
     private ApplicationRepository applicationRepository;

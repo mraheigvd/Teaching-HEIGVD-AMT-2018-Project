@@ -78,13 +78,13 @@
         <span>${pageNbr}/${nbrOfPage} (${nbrPerPage} per page)</span>
         <form action="${pageContext.servletContext.contextPath}/applications" method="post">
             <button type="submit" class="btn btn-primary" name="firstPage" <c:if test="${pageNbr == 1}">disabled</c:if>>first page</button>
-            <button type="submit" class="btn btn-primary" name="previousPage" <c:if test="${pageNbr <= 1}">disabled</c:if>>previous page</button>
-            <button type="submit" class="btn btn-primary" name="nextPage" <c:if test="${pageNbr >= nbrOfPage}">disabled</c:if>>next page</button>
+            <button type="submit" id="previousPage" class="btn btn-primary" name="previousPage" <c:if test="${pageNbr <= 1}">disabled</c:if>>previous page</button>
+            <button type="submit" id="nextPage" class="btn btn-primary" name="nextPage" <c:if test="${pageNbr >= nbrOfPage}">disabled</c:if>>next page</button>
             <button type="submit" class="btn btn-primary" name="lastPage" <c:if test="${pageNbr == nbrOfpage}">disabled</c:if>>last page</button>
         </form>
     </div>
 
-<!-- Modal -->w
+<!-- Modal -->
 <div class="modal fade" id="appModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

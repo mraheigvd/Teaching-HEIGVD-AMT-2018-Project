@@ -42,8 +42,6 @@ public class UsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //Retrieve action
         String action = request.getParameterMap().containsKey("action") ? request.getParameter("action").toUpperCase() : "";
-        //Retrieve all users
-        LinkedList<User> users = (LinkedList<User>) userRepository.findAll();
 
         //Test if disable has been required
         if (action.equals(DISABLE)) {
@@ -52,6 +50,7 @@ public class UsersServlet extends HttpServlet {
             if (userId != null) {
                 //find the user by his/her id and disable him/her
                 userRepository.disable(userRepository.findById(userId));
+
             }
         } else if (action.equals(RESET)) {
             Long userId = Long.parseLong(request.getParameter("user_id"));
@@ -70,7 +69,10 @@ public class UsersServlet extends HttpServlet {
             } catch (MessagingException e) {
                 e.printStackTrace();
             }
+
         }
+
+        LinkedList<User> users = (LinkedList<User>) userRepository.findAll();
 
         request.setAttribute("users", users);
         request.getRequestDispatcher("/WEB-INF/pages/users.jsp").forward(request, response);

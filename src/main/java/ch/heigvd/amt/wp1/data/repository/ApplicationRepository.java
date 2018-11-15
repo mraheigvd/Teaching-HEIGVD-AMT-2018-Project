@@ -7,10 +7,7 @@ import ch.heigvd.amt.wp1.data.model.User;
 import javax.annotation.Resource;
 import javax.ejb.*;
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,11 +23,13 @@ public class ApplicationRepository {
 
     public List<Application> findByUser(User user) {
         List<Application> applications = new LinkedList<>();
+        Connection connection = null;
         try {
             String sql = "SELECT * FROM " + TABLE_NAME +
                     " INNER JOIN user_application ON user_application.fk_application = application.id " +
                     "AND user_application.fk_user = ?";
-            PreparedStatement prepare = database.getConnection().prepareStatement(sql);
+            connection = database.getConnection();
+            PreparedStatement prepare = connection.prepareStatement(sql);
             prepare.setLong(1, user.getId());
             ResultSet result = prepare.executeQuery();
             while (result.next()) {
@@ -43,19 +42,26 @@ public class ApplicationRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return applications;
     }
 
     public List<Application> findPageByUser(User user, int pageNbr, int nbrPerPages) {
         List<Application> applications = new LinkedList<>();
+        Connection connection = null;
         try {
             String sql = "SELECT * FROM " + TABLE_NAME +
                     " INNER JOIN user_application ON user_application.fk_application = application.id " +
                     "AND user_application.fk_user = ?"
                     + " LIMIT ? OFFSET ?";
-
-            PreparedStatement prepare = database.getConnection().prepareStatement(sql);
+            connection = database.getConnection();
+            PreparedStatement prepare = connection.prepareStatement(sql);
             prepare.setLong(1, user.getId());
             prepare.setInt(2, nbrPerPages);
             prepare.setInt(3, (pageNbr - 1) * nbrPerPages);
@@ -70,16 +76,24 @@ public class ApplicationRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return applications;
     }
 
     public int getCountByUser(User user) {
+        Connection connection = null;
         try {
             String sql = "SELECT count(application.id) FROM " + TABLE_NAME +
                     " INNER JOIN user_application ON user_application.fk_application = application.id " +
                     "AND user_application.fk_user = ?";
-            PreparedStatement prepare = database.getConnection().prepareStatement(sql);
+            connection = database.getConnection();
+            PreparedStatement prepare = connection.prepareStatement(sql);
             prepare.setLong(1, user.getId());
             ResultSet result = prepare.executeQuery();
             if (result.next()) {
@@ -87,14 +101,22 @@ public class ApplicationRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return 0;
     }
 
     public Application findById(Long id) {
         Application application = null;
+        Connection connection = null;
         try {
-            PreparedStatement prepare = database.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE id = ?");
+            connection = database.getConnection();
+            PreparedStatement prepare = connection.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE id = ?");
             prepare.setLong(1, id);
             ResultSet result = prepare.executeQuery();
             if(result.next()) {
@@ -107,15 +129,23 @@ public class ApplicationRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return application;
     }
 
     public List<Application> findPage(int pageNbr, int nbrPerPages) {
         List<Application> applications = new LinkedList<>();
+        Connection connection = null;
         try {
             String sql = "SELECT * FROM " + TABLE_NAME + " LIMIT ? OFFSET ?";
-            PreparedStatement prepare = database.getConnection().prepareStatement(sql);
+            connection = database.getConnection();
+            PreparedStatement prepare = connection.prepareStatement(sql);
             prepare.setInt(1, nbrPerPages);
             prepare.setInt(2, (pageNbr - 1) * nbrPerPages);
             ResultSet result = prepare.executeQuery();
@@ -129,15 +159,23 @@ public class ApplicationRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return applications;
     }
 
     public List<Application> findAll() {
         List<Application> applications = new LinkedList<>();
+        Connection connection = null;
         try {
             String sql = "SELECT * FROM " + TABLE_NAME;
-            PreparedStatement prepare = database.getConnection().prepareStatement(sql);
+            connection = database.getConnection();
+            PreparedStatement prepare = connection.prepareStatement(sql);
             ResultSet result = prepare.executeQuery();
             while (result.next()) {
                 Application application = new Application(result.getInt("id"),
@@ -149,14 +187,22 @@ public class ApplicationRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return applications;
     }
 
     public Application create(Application application, User user) {
+        Connection connection = null;
         try {
             // Create the application
-            PreparedStatement statement = database.getConnection().prepareStatement(
+            connection = database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO " +
                             TABLE_NAME +"(name, description, app_key, app_token) " +
                             "VALUES(?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS
@@ -196,14 +242,22 @@ public class ApplicationRepository {
             return application;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
 
     public boolean update(Application application, User user) {
+        Connection connection = null;
         try {
             // Check if application is owned by user
-            PreparedStatement prepare = database.getConnection().prepareStatement("SELECT fk_application " +
+            connection = database.getConnection();
+            PreparedStatement prepare = connection.prepareStatement("SELECT fk_application " +
                     "FROM user_application " +
                     "WHERE fk_application = ? AND fk_user = ? ");
             prepare.setLong(1, application.getId());
@@ -235,16 +289,23 @@ public class ApplicationRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return false;
     }
 
     public boolean delete(Application application, User user) {
+        Connection connection = null;
         if (application.getId() != null) {
-
             String sql = "DELETE FROM user_application WHERE fk_application = ? AND fk_user = ?";
             try {
-                PreparedStatement prepare = database.getConnection().prepareStatement(sql);
+                connection = database.getConnection();
+                PreparedStatement prepare = connection.prepareStatement(sql);
                 prepare.setLong(1, application.getId());
                 prepare.setLong(2, user.getId());
 
@@ -265,6 +326,12 @@ public class ApplicationRepository {
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;
+            } finally {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return false;

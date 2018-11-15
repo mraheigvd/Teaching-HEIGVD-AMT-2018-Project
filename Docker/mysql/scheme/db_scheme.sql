@@ -120,3 +120,7 @@ ALTER TABLE `user_application`
 ALTER TABLE `user_application`
   ADD CONSTRAINT `fk_application_constraint` FOREIGN KEY (`fk_application`) REFERENCES `application` (`id`),
   ADD CONSTRAINT `fk_user_constraint` FOREIGN KEY (`fk_user`) REFERENCES `user` (`id`);
+
+
+--- Insert
+INSERT INTO user VALUES(NULL, "john@doe.com", "John", "Doe", "$31$16$ncA_-fKrTlCds5x2002tpj4dTZE1456NZd35KHvaMwI", 0, 1, null, 0);

@@ -6,6 +6,7 @@ import ch.heigvd.amt.wp1.data.model.User;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,8 +23,10 @@ public class UserRepository {
 
     public User findByEmail(String email) {
         User user = new User();
+        Connection connection = null;
         try {
-            PreparedStatement prepare = database.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE email = ?");
+            connection = database.getConnection();
+            PreparedStatement prepare = connection.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE email = ?");
             prepare.setString(1, email);
             ResultSet result = prepare.executeQuery();
             if(result.next()) {
@@ -41,14 +44,22 @@ public class UserRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
 
     public User findById(Long id) {
         User user = new User();
+        Connection connection = null;
         try {
-            PreparedStatement prepare = database.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE id = ?");
+            connection = database.getConnection();
+            PreparedStatement prepare = connection.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE id = ?");
             prepare.setLong(1, id);
             ResultSet result = prepare.executeQuery();
             if(result.next()) {
@@ -65,6 +76,12 @@ public class UserRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
@@ -72,8 +89,10 @@ public class UserRepository {
     // Hint: http://java.avdiel.com/Tutorials/JDBCPaging.html
     public List<User> findAll() {
         List<User> users = new LinkedList<User>();
+        Connection connection = null;
         try {
-            PreparedStatement prepare = database.getConnection().prepareStatement("SELECT * FROM " + TABLE_NAME);
+            connection = database.getConnection();
+            PreparedStatement prepare = connection.prepareStatement("SELECT * FROM " + TABLE_NAME);
             ResultSet result = prepare.executeQuery();
             while(result.next()) {
                 User user = new User();
@@ -90,13 +109,21 @@ public class UserRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return users;
     }
 
     public User create(User user) {
+        Connection connection = null;
         try {
-            PreparedStatement statement = database.getConnection().prepareStatement(
+            connection = database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO " +
                             TABLE_NAME +"(email, firstname, lastname, password, is_admin, is_enable, token_validate) " +
                             "VALUES(?, ?, ?, ?, ?, ?, ?)"
@@ -117,11 +144,18 @@ public class UserRepository {
             return user;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
 
     public boolean update(User user) {
+        Connection connection = null;
         try {
             String sql = "UPDATE " +
                     TABLE_NAME +
@@ -134,7 +168,8 @@ public class UserRepository {
                     "token_validate = ?, " +
                     "password_is_expired = ? " +
                     "WHERE id = ?";
-            PreparedStatement statement = database.getConnection().prepareStatement(sql);
+            connection = database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getFirstname());
             statement.setString(3, user.getLastname());
@@ -153,13 +188,21 @@ public class UserRepository {
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return false;
     }
 
     public boolean disable(User user) {
+        Connection connection = null;
         try {
-            PreparedStatement statement = database.getConnection().prepareStatement(
+            connection = database.getConnection();
+            PreparedStatement statement = connection.prepareStatement(
                     "UPDATE " +
                             TABLE_NAME +" SET is_enable = ? " +
                             "WHERE id = ?"
@@ -174,16 +217,24 @@ public class UserRepository {
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return false;
     }
 
     public boolean delete(User user) {
+        Connection connection = null;
         if (user.getId() != null) {
 
             String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
             try {
-                PreparedStatement prepare = database.getConnection().prepareStatement(sql);
+                connection = database.getConnection();
+                PreparedStatement prepare = connection.prepareStatement(sql);
                 prepare.setLong(1, user.getId());
 
                 //verifie le resultat de l'execution de la requete SQL
@@ -194,6 +245,12 @@ public class UserRepository {
             } catch (SQLException e) {
                 e.printStackTrace();
                 return false;
+            } finally {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return false;
