@@ -114,7 +114,7 @@ App creation :
 
 Error message on the creation : 
 
-![](/Users/olivier/Documents/GitHub/Teaching-HEIGVD-AMT-2018-Project/md_images/app_creation_error.png)
+![](md_images/app_creation_error.png)
 
 
 
