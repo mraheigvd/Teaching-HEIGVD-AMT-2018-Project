@@ -151,7 +151,8 @@ public class ApplicationServlet extends HttpServlet {
 
 
     public void pagination(HttpServletRequest request, User user, int totalPages) {
-        List<Application> applications = applicationRepository.findPageByUser(user, pageNbr, nbrPerPage);
+        List<Application> applications = applicationRepository.findByUser(user);
+        applications = applications.subList((pageNbr - 1) * nbrPerPage, Math.min(pageNbr * nbrPerPage, applications.size()));
         request.setAttribute("nbrOfPage", totalPages);
         request.setAttribute("applications", applications);
         request.setAttribute("pageNbr", pageNbr);
