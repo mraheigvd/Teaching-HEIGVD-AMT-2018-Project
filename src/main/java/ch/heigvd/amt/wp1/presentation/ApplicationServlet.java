@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,7 +113,12 @@ public class ApplicationServlet extends HttpServlet {
                     PasswordAuthentication.generateAlphanumString(20),
                     PasswordAuthentication.generateAlphanumString(50));
             // Find and try to authenticate the user
-            application = applicationRepository.create(application, user);
+            try {
+                application = applicationRepository.create(application, user);
+            } catch(RuntimeException e){
+                e.printStackTrace();
+            }
+
             if (application.getId() == null ) {
                 messages.put("error", "An error occured during the creation. Please retry.");
             }

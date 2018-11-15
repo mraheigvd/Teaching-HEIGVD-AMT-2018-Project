@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class ApplicationRepository {
 
     private final static String TABLE_NAME = "application";
@@ -217,6 +218,9 @@ public class ApplicationRepository {
                 throw new SQLException("Error");
             }
 
+            throw new SQLException("BOOM");
+
+            /*
             ResultSet keys = statement.getGeneratedKeys();
 
             int count = 0;
@@ -239,9 +243,10 @@ public class ApplicationRepository {
                 throw new SQLException("Updates failed");
             }
 
-            return application;
+            return application;*/
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             try {
                 connection.close();
@@ -249,7 +254,7 @@ public class ApplicationRepository {
                 e.printStackTrace();
             }
         }
-        return null;
+        //return null;
     }
 
     public boolean update(Application application, User user) {
