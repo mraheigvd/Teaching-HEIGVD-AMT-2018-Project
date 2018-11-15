@@ -1,6 +1,6 @@
-#Teaching-HEIGVD-AMT-2018-Project
+# Teaching-HEIGVD-AMT-2018-Project
 
-##Automated functional tests
+## Automated functional tests
 
 The automated functional tests projet is located in this GitHub repository: https://github.com/LionelNanchen/Teaching-HEIGVD-AMT-2018-Project-Functional-Tests.
 
