@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class ApplicationServlet extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
 
         int totalAppCount = applicationRepository.getCountByUser(user);
-        int totalPages = ((int) Math.ceil(((double) totalAppCount) / nbrPerPage));
+        int totalPages = Math.max(((int) Math.ceil(((double) totalAppCount) / nbrPerPage)), 1);
 
         if (action.equals("DELETE")) {
             Long appId = Long.parseLong(request.getParameter("app_id"));
@@ -59,7 +60,7 @@ public class ApplicationServlet extends HttpServlet {
         Map<String, String> messages = new HashMap<>();
 
         int totalAppCount = applicationRepository.getCountByUser(user);
-        int totalPages = ((int) Math.ceil(((double) totalAppCount) / nbrPerPage));
+        int totalPages = Math.max(((int) Math.ceil(((double) totalAppCount) / nbrPerPage)), 1);
 
         if(request.getAttribute("pageNbr") != null) pageNbr = (int) request.getAttribute("pageNbr");
         if(pageNbr < 1) pageNbr = 1;
@@ -112,7 +113,12 @@ public class ApplicationServlet extends HttpServlet {
                     PasswordAuthentication.generateAlphanumString(20),
                     PasswordAuthentication.generateAlphanumString(50));
             // Find and try to authenticate the user
-            application = applicationRepository.create(application, user);
+            try {
+                application = applicationRepository.create(application, user);
+            } catch(RuntimeException e){
+                e.printStackTrace();
+            }
+
             if (application.getId() == null ) {
                 messages.put("error", "An error occured during the creation. Please retry.");
             }
