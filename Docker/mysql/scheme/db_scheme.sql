@@ -123,4 +123,6 @@ ALTER TABLE `user_application`
 
 
 --- Insert
-INSERT INTO user VALUES(NULL, "john@doe.com", "John", "Doe", "$31$16$ncA_-fKrTlCds5x2002tpj4dTZE1456NZd35KHvaMwI", 0, 1, null, 0);
+INSERT INTO user VALUES(1, "john@doe.com", "John", "Doe", "$31$16$ncA_-fKrTlCds5x2002tpj4dTZE1456NZd35KHvaMwI", 0, 1, null, 0);
+INSERT INTO application VALUES(1, "test-app", "test-description", "test-app-key", "test-app-secret");
+INSERT INTO user_application VALUES(1, 1, 1);
