@@ -46,7 +46,7 @@ public class UserRepository {
             e.printStackTrace();
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -78,7 +78,7 @@ public class UserRepository {
             e.printStackTrace();
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -111,7 +111,7 @@ public class UserRepository {
             e.printStackTrace();
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -146,7 +146,7 @@ public class UserRepository {
             e.printStackTrace();
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -190,7 +190,7 @@ public class UserRepository {
             e.printStackTrace();
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -219,7 +219,7 @@ public class UserRepository {
             e.printStackTrace();
         } finally {
             try {
-                connection.close();
+                if (connection != null) connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -247,7 +247,7 @@ public class UserRepository {
                 return false;
             } finally {
                 try {
-                    connection.close();
+                    if (connection != null) connection.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
