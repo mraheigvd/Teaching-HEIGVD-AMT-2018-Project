@@ -18,7 +18,7 @@
 </head>
 
 <body class="text-center">
-<form class="form-signin" method="post" action="${pageContext.servletContext.contextPath}/reset">
+<form class="form-signin" method="post" action="${pageContext.servletContext.contextPath}/searchUser">
     <img class="mb-4" src="" alt="" width="72" height="72">
     <h1>Gamification W1</h1>
     <h3 class="h3 mb-3 font-weight-normal">Enter your email to recover your password.</h3>

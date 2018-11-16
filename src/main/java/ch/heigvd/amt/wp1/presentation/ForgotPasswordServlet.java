@@ -24,8 +24,7 @@ import java.util.Map;
 @WebServlet(urlPatterns = "/forgotPassword")
 public class ForgotPasswordServlet extends HttpServlet {
 
-    final String DISABLE = "DISABLE";
-    final String RESET = "RESET";
+    final String SEARCHUSER = "SEARCHUSER";
 
     @EJB
     private ApplicationRepository applicationRepository;
@@ -40,46 +39,28 @@ public class ForgotPasswordServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        /*//Retrieve action
-        String action = request.getParameterMap().containsKey("action") ? request.getParameter("action").toUpperCase() : "";
-
-        //Test if disable has been required
-        if (action.equals(DISABLE)) {
-            Long userId = Long.parseLong(request.getParameter("user_id"));
-
-            if (userId != null) {
-                //find the user by his/her id and disable him/her
-                userRepository.disable(userRepository.findById(userId));
-
-            }
-        } else if (action.equals(RESET)) {
-            Long userId = Long.parseLong(request.getParameter("user_id"));
-            User userTargetted = userRepository.findById(userId);
-
-            final String newPassword = PasswordAuthentication.generateAlphanumString(8);
-            userTargetted.setPassword(passwordAuthentication.hash(newPassword.toCharArray()));
-            userTargetted.setPasswordIsExpired(true);
-            userRepository.update(userTargetted);
-
-            final String body = "Dear " + userTargetted.getFirstname() + " " + userTargetted.getLastname() + ",\r\n\r\n" +
-                    "An admin requested a password reset for you. Please use this password for your next connection : " + newPassword + "\r\n\r\n" +
-                    "a new password will be ask on your next login. \r\n\r\n Your Gamification team.";
-            try {
-                emailSender.sendEmail(userTargetted.getEmail(), "Gamification password reset", body);
-            } catch (MessagingException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        LinkedList<User> users = (LinkedList<User>) userRepository.findAll();
-
-        request.setAttribute("users", users); */
         request.getRequestDispatcher("/WEB-INF/pages/forgot_password.jsp").forward(request, response);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String email = request.getParameter("email");
+        Map<String, String> messages = new HashMap<>();
+
+        if (email == null || email.isEmpty()) {
+            messages.put("email", "Please enter email");
+        }
+
+        if (messages.isEmpty()) {
+            // Find and try to authenticate the user
+            User user = userRepository.findByEmail(email);
+
+            if (user != null) {
+                //generate key
+
+                //send mail
+            } else {
+                messages.put("login", "Bad credentials, please try again");
+            }
+        }
     }
 }
