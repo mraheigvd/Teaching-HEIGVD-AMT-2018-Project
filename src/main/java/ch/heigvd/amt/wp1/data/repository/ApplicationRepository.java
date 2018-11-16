@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Stateless
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class ApplicationRepository {
 
     private final static String TABLE_NAME = "application";
