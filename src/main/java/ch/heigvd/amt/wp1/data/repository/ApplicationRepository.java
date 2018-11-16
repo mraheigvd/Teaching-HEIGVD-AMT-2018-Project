@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Stateless
-//@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class ApplicationRepository {
 
     private final static String TABLE_NAME = "application";
@@ -251,7 +251,6 @@ public class ApplicationRepository {
         } finally {
             try {
                 if (connection != null) connection.close();
-                return null;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
