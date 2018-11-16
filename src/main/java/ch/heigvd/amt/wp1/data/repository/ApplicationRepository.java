@@ -199,7 +199,7 @@ public class ApplicationRepository {
         return applications;
     }
 
-    public Application create(Application application, User user) {
+    public Application create(Application application, User user) throws RuntimeException {
         Connection connection = null;
 
         try {
@@ -220,6 +220,9 @@ public class ApplicationRepository {
                 throw new SQLException("Error");
             }
 
+            throw new RuntimeException("BOOM");
+
+            /*
             ResultSet keys = statement.getGeneratedKeys();
 
             int count = 0;
@@ -242,6 +245,8 @@ public class ApplicationRepository {
             }
 
             return application;
+            */
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);

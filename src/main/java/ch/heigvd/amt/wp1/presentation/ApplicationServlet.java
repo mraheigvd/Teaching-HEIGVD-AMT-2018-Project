@@ -115,13 +115,15 @@ public class ApplicationServlet extends HttpServlet {
             // Find and try to authenticate the user
             try {
                 application = applicationRepository.create(application, user);
-            } catch(RuntimeException e){
-                e.printStackTrace();
+
+                if (application.getId() == null ) {
+                    messages.put("error", "An error occured during the creation. Please retry.");
+                }
+            } catch(Exception e) {
+                messages.put("error", "EXCEPTION : An error occured during the creation. Please retry.");
+                application = null;
             }
 
-            if (application.getId() == null ) {
-                messages.put("error", "An error occured during the creation. Please retry.");
-            }
             return application;
         }
         return null;

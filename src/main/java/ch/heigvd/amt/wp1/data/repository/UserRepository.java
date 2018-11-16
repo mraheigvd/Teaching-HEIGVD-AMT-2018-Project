@@ -16,7 +16,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Stateless
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class UserRepository {
 
     private final static String TABLE_NAME = "user";
