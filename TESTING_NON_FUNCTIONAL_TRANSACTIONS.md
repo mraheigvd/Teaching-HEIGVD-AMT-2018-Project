@@ -10,7 +10,7 @@ This document describe our experiment to prove that transactions works in our pr
 
 The creation of an application is done in two steps, the first is to create the application in the table application and after that the link between the application and the user is created on the table user_application. The problem is is the application is created and an exception append before the link is done on the table user_application, our application will be on the database but not linked to any user. 
 
-![sql_scheme](md_images/sql_scheme.png)
+![sql_scheme](/Users/olivier/Documents/GitHub/Teaching-HEIGVD-AMT-2018-Project/md_images/sql_scheme.png)
 
 
 
@@ -108,22 +108,22 @@ And the result is correct, on the client side we have an error and the app creat
 
 App creation : 
 
-![](md_images/ap_creation_test2.png)
+![](/Users/olivier/Documents/GitHub/Teaching-HEIGVD-AMT-2018-Project/md_images/ap_creation_test2.png)
 
 
 
 Error message on the creation : 
 
-![](md_images/app_creation_error.png)
+![](/Users/olivier/Documents/GitHub/Teaching-HEIGVD-AMT-2018-Project/md_images/app_creation_error.png)
 
 
 
 Result in phpmyadmin : 
 
-| Table            | Before                             | After                              |
-| ---------------- | ---------------------------------- | ---------------------------------- |
-| application      | ![](md_images/before_app.png)      | ![](md_images/after_app2.png)      |
-| user_application | ![](md_images/before_user_app.png) | ![](md_images/after_user_app2.png) |
+| Table            | Before                            | After                              |
+| ---------------- | --------------------------------- | ---------------------------------- |
+| application      | ![](md_images/after_app.png)      | ![](md_images/after_app2.png)      |
+| user_application | ![](md_images/after_user_app.png) | ![](md_images/after_user_app2.png) |
 
 
 
