@@ -1,8 +1,6 @@
 package ch.heigvd.amt.wp1.presentation;
 
-import ch.heigvd.amt.wp1.data.model.Application;
 import ch.heigvd.amt.wp1.data.model.User;
-import ch.heigvd.amt.wp1.data.repository.ApplicationRepository;
 import ch.heigvd.amt.wp1.data.repository.UserRepository;
 import ch.heigvd.amt.wp1.util.EmailSender;
 import ch.heigvd.amt.wp1.util.PasswordAuthentication;
@@ -15,16 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.SecureRandom;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 @WebServlet(urlPatterns = "/forgotPassword")
 public class ForgotPasswordServlet extends HttpServlet {
-
-    final String SEARCHUSER = "SEARCHUSER";
 
     @EJB
     private UserRepository userRepository;
@@ -36,46 +29,57 @@ public class ForgotPasswordServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/pages/forgot_password.jsp").forward(request, response);
+        String email = request.getParameter("email");
+        String token = request.getParameter("token");
+        if (!token.isEmpty() && !email.isEmpty()) {
+            User user = userRepository.findByEmail(email);
+            if (user != null && user.getTokenValidate().equals(token)) {
+                request.setAttribute("email", email);
+                request.setAttribute("token", token);
+                request.getRequestDispatcher("/WEB-INF/pages/forgot_password.jsp").forward(request, response);
+            }
+        }
+        response.sendRedirect(request.getContextPath() + "/");
     }
+
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
-        Map<String, String> messages = new HashMap<>();
+        String token = request.getParameter("token");
+        String password = request.getParameter("password");
+        String passwordConfirmation = request.getParameter("password-confirmation");
 
-        if (email == null || email.isEmpty()) {
-            messages.put("email", "Please enter email");
-        }
 
-        if (messages.isEmpty()) {
-            // Find and try to authenticate the user
-            User user = userRepository.findByEmail(email);
+        if (!token.isEmpty() && !email.isEmpty()) {
+            Map<String, String> errors = new HashMap<>();
 
-            if (user != null) {
-                //generate key
-                final String passwordResetToken = PasswordAuthentication.generateAlphanumString(20);
+            if (password.isEmpty())
+                errors.put("password_error", "Password is empty");
+            if (passwordConfirmation.isEmpty())
+                errors.put("password_confirmation_error", "Password confirmation is empty");
 
-                final String body = "Dear " + user.getFirstname() + " " + user.getLastname() + ",\r\n\r\n" +
-                        "Please use this link to reset your password : LINKHERE/" + passwordResetToken + "\r\n\r\n" +
-                        "you need to set a new password. \r\n\r\n Your Gamification team.";
+            if (password.equals(passwordConfirmation)) {
+                User user = userRepository.findByEmail(email);
+                user.setPassword(passwordAuthentication.hash(password.toCharArray()));
+                user.setTokenValidate(null);
+                userRepository.update(user);
+            } else {
+                errors.put("password_error", "Password are not the same");
+            }
 
-                //send mail
-                try {
-                    emailSender.sendEmail(user.getEmail(), "Gamification reset your password", body);
-                    System.out.println("PASSWORD RESET MAIL SENT");
-                } catch (MessagingException e) {
-                    e.printStackTrace();
+            // Check if errors
+            if (errors.isEmpty()) {
+                request.getSession().invalidate();
+                request.setAttribute("passwordChanged", "Your password has been changed");
+                response.sendRedirect(request.getContextPath() + "/login");
+            } else {
+                for (Map.Entry<String, String> error : errors.entrySet()) {
+                    System.out.println(error.getKey());
+                    request.setAttribute(error.getKey(), error.getValue());
                 }
+                request.getRequestDispatcher("/WEB-INF/pages/reset_password.jsp").forward(request, response);
             }
-
-            System.out.println("END OF DOPOST");
-
-            messages.put("message", "If your email is on our database, a mail to change your password will be sent.");
-
-            for (Map.Entry<String, String> error : messages.entrySet()) {
-                request.setAttribute(error.getKey(), error.getValue());
-            }
-            request.getRequestDispatcher("/WEB-INF/pages/forgot_password.jsp").forward(request, response);
         }
+
     }
 }

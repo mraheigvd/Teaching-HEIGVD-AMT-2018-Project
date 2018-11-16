@@ -54,7 +54,7 @@
     <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
     <button id="buttonSignIn" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     <a id="buttonRegister" class="btn btn-lg btn-secondary btn-block" href="${pageContext.servletContext.contextPath}/register">Register</a>
-    <a href="${pageContext.servletContext.contextPath}/forgotPassword">Forgot password</a>
+    <a href="${pageContext.servletContext.contextPath}/requestForgotPassword">Forgot password</a>
     <p class="mt-5 mb-3 text-muted">&copy; Gamification-WP1 2018</p>
 </form>
 </body>

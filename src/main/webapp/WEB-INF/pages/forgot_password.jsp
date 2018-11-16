@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Gamification-WP1 - Forgot password</title>
+    <title>Gamification-WP1 - Password change</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -21,23 +21,24 @@
 <form class="form-signin" method="post" action="${pageContext.servletContext.contextPath}/forgotPassword">
     <img class="mb-4" src="" alt="" width="72" height="72">
     <h1>Gamification W1</h1>
-    <h3 class="h3 mb-3 font-weight-normal">Enter your email to recover your password.</h3>
-
-    <c:if test="${email != null}">
+    <h3 class="h3 mb-3 font-weight-normal">Please change your password.</h3>
+    <c:if test="${password_error != null}">
         <div class="alert alert-danger" role="alert">
-            <strong>Oh!</strong> ${email}
+            <strong>Oh!</strong> ${password_error}
         </div>
     </c:if>
-
-    <c:if test="${message != null}">
-        <div class="alert alert-success" role="alert">
-            ${message}
+    <c:if test="${password_confirmation_error != null}">
+        <div class="alert alert-danger" role="alert">
+            <strong>Oh!</strong> ${password_confirmation_error}
         </div>
     </c:if>
-
-    <label for="email" class="sr-only">Email</label>
-    <input type="text" id="email" name="email" class="form-control" placeholder="Your email" required autofocus>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Send me a reset password link</button>
+    <label for="password" class="sr-only">New password</label>
+    <input type="hidden" name="email" value="${email}"/>
+    <input type="hidden" name="token" value="${token}"/>
+    <input type="password" id="password" name="password" class="form-control" placeholder="New password" required autofocus>
+    <label for="password-confirmation" class="sr-only">Confirm new password</label>
+    <input type="password" id="password-confirmation" name="password-confirmation" class="form-control" placeholder="Confirm new password" required autofocus>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Change password</button>
     <p class="mt-5 mb-3 text-muted">&copy; Gamification-WP1 2018</p>
 </form>
 </body>

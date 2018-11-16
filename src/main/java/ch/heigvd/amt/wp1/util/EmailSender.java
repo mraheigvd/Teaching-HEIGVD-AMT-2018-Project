@@ -8,6 +8,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -31,7 +32,15 @@ public class EmailSender {
 
         message.setSubject(subject);
         message.setRecipient(Message.RecipientType.TO, new InternetAddress(rcptTo));
-        message.setText(body);
+        message.setContent(body, "text/html");
         Transport.send(message);
+    }
+
+    public static String getBaseUrl(HttpServletRequest request) {
+        String scheme = request.getScheme() + "://";
+        String serverName = request.getServerName();
+        String serverPort = (request.getServerPort() == 80) ? "" : ":" + request.getServerPort();
+        String contextPath = request.getContextPath();
+        return scheme + serverName + serverPort + contextPath;
     }
 }
