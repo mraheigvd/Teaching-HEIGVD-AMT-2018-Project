@@ -244,12 +244,14 @@ public class ApplicationRepository {
             }
 
             return application;*/
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         } finally {
             try {
                 if (connection != null) connection.close();
+                return null;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
