@@ -24,7 +24,7 @@ public class SecurityFilter implements Filter {
         HttpSession session = request.getSession(false);
 
         // Don't filter resources and registration page
-        if (request.getRequestURI().matches(".*(css|jpg|png|gif|js|register|reset)$")) {
+        if (request.getRequestURI().matches(".*(css|jpg|png|gif|js|register|reset|forgotPassword|requestForgotPassword)$")) {
             filterChain.doFilter(servletRequest, servletResponse);
             System.out.println("SecurityFilter => Resources or basic pages asked");
             return;

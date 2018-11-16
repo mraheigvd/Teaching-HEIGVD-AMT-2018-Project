@@ -33,13 +33,13 @@
     </div>
     <input type="hidden" id="email" name="email" placeholder="Email" value="${user.email}">
     <div class="form-group row">
-        <label for="firstname" class="col-sm-2 col-form-label">Firstname</label>
+        <label for="inputFirstname" class="col-sm-2 col-form-label">Firstname</label>
         <div class="col-sm-10">
             <input type="text" class="form-control" id="inputFirstname" name="firstname" placeholder="Firstname" value="${user.firstname}">
         </div>
     </div>
     <div class="form-group row">
-        <label for="lastname" class="col-sm-2 col-form-label">Lastname</label>
+        <label for="inputLastname" class="col-sm-2 col-form-label">Lastname</label>
         <div class="col-sm-10">
             <input type="text" class="form-control" id="inputLastname" name="lastname" placeholder="Lastname" value="${user.lastname}">
         </div>

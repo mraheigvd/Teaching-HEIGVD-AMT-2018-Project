@@ -46,7 +46,8 @@ CREATE TABLE `user` (
   `password` varchar(4096) NOT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
   `is_enable` tinyint(1) NOT NULL DEFAULT '0',
-  `token_validate` varchar(4096) DEFAULT NULL
+  `token_validate` varchar(4096) DEFAULT NULL,
+  `password_is_expired` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -122,7 +123,7 @@ ALTER TABLE `user_application`
   ADD CONSTRAINT `fk_user_constraint` FOREIGN KEY (`fk_user`) REFERENCES `user` (`id`);
 
 
---- Insert
-INSERT INTO user VALUES(1, "john@doe.com", "John", "Doe", "$31$16$ncA_-fKrTlCds5x2002tpj4dTZE1456NZd35KHvaMwI", 0, 1, null, 0);
+-- Insert
+INSERT INTO user VALUES(1, "john@doe.com", "John", "Doe", "$31$16$ncA_-fKrTlCds5x2002tpj4dTZE1456NZd35KHvaMwI", 1, 1, null, 0);
 INSERT INTO application VALUES(1, "test-app", "test-description", "test-app-key", "test-app-secret");
 INSERT INTO user_application VALUES(1, 1, 1);
