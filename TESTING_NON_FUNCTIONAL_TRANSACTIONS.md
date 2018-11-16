@@ -129,3 +129,7 @@ First of all we had some issue to understand how transactions works in EJB but w
 
 
 
+JavaEE documentation source : [TransactionAttributeType](https://docs.oracle.com/javaee/6/api/javax/ejb/TransactionAttributeType.html) 
+
+
+
