@@ -120,10 +120,10 @@ Error message on the creation :
 
 Result in phpmyadmin : 
 
-| Table            | Before                             | After                              |
-| ---------------- | ---------------------------------- | ---------------------------------- |
-| application      | ![](md_images/before_app.png)      | ![](md_images/after_app2.png)      |
-| user_application | ![](md_images/before_user_app.png) | ![](md_images/after_user_app2.png) |
+| Table            | Before                            | After                              |
+| ---------------- | --------------------------------- | ---------------------------------- |
+| application      | ![](md_images/after_app.png)      | ![](md_images/after_app2.png)      |
+| user_application | ![](md_images/after_user_app.png) | ![](md_images/after_user_app2.png) |
 
 
 
