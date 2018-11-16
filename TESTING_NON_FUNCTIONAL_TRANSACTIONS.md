@@ -14,24 +14,33 @@ The creation of an application is done in two steps, the first is to create the 
 
 
 
+For our tests we've done theses manipulations :
+
+App creation : 
+
+![](/Users/olivier/Documents/GitHub/Teaching-HEIGVD-AMT-2018-Project/md_images/ap_creation_test2.png)
+
+
+
+Error message on the creation : 
+
+![](/Users/olivier/Documents/GitHub/Teaching-HEIGVD-AMT-2018-Project/md_images/app_creation_error.png)
+
+
+
 ### Testing rollback
 
-Before we tested it without the ```@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)``` the result is that the application is created but not the entry in the user_application when we create the application "Test1" :
+Before we tested it without the ```@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)``` the result is that the application isn't created and the rollback works fine. You can see the result on phpmyadmin here :
 
 | Table            | Before                             | After                             |
 | ---------------- | ---------------------------------- | --------------------------------- |
 | application      | ![](md_images/before_app.png)      | ![](md_images/after_app.png)      |
 | user_application | ![](md_images/before_user_app.png) | ![](md_images/after_user_app.png) |
 
-The issue is that the application is created but not linked to any user.
-
-
-
-Now to test the rollback, we have added an exception between the application creation and the link request in the table user_application table with the following code : 
+This is our test code :
 
 ```java
 @Stateless
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class ApplicationRepository {
 
 ...
@@ -88,7 +97,6 @@ public class ApplicationRepository {
         } finally {
             try {
                 connection.close();
-                //return null;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -102,21 +110,9 @@ public class ApplicationRepository {
 
 
 
-And the result is correct, on the client side we have an error and the app creation is rollback correctly. Here some screenshots to show the test : 
+### Test with TransactionAttributeType.REQUIRES_NEW
 
-
-
-App creation : 
-
-![](/Users/olivier/Documents/GitHub/Teaching-HEIGVD-AMT-2018-Project/md_images/ap_creation_test2.png)
-
-
-
-Error message on the creation : 
-
-![](/Users/olivier/Documents/GitHub/Teaching-HEIGVD-AMT-2018-Project/md_images/app_creation_error.png)
-
-
+After that we've tested if with the ```@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)``` and the result is that the applications is created but not the link between this application and the user.
 
 Result in phpmyadmin : 
 
@@ -124,10 +120,6 @@ Result in phpmyadmin :
 | ---------------- | --------------------------------- | ---------------------------------- |
 | application      | ![](md_images/after_app.png)      | ![](md_images/after_app2.png)      |
 | user_application | ![](md_images/after_user_app.png) | ![](md_images/after_user_app2.png) |
-
-
-
-The result is correct, the new application has been rollbacked.
 
 
 
