@@ -18,20 +18,23 @@
 </head>
 
 <body class="text-center">
-<form class="form-signin" method="post" action="${pageContext.servletContext.contextPath}/searchUser">
+<form class="form-signin" method="post" action="${pageContext.servletContext.contextPath}/forgotPassword">
     <img class="mb-4" src="" alt="" width="72" height="72">
     <h1>Gamification W1</h1>
     <h3 class="h3 mb-3 font-weight-normal">Enter your email to recover your password.</h3>
-    <c:if test="${password_error != null}">
+
+    <c:if test="${email != null}">
         <div class="alert alert-danger" role="alert">
-            <strong>Oh!</strong> ${password_error}
+            <strong>Oh!</strong> ${email}
         </div>
     </c:if>
-    <c:if test="${password_confirmation_error != null}">
-        <div class="alert alert-danger" role="alert">
-            <strong>Oh!</strong> ${password_confirmation_error}
+
+    <c:if test="${message != null}">
+        <div class="alert alert-success" role="alert">
+            ${message}
         </div>
     </c:if>
+
     <label for="email" class="sr-only">Email</label>
     <input type="text" id="email" name="email" class="form-control" placeholder="Your email" required autofocus>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Send me a reset password link</button>

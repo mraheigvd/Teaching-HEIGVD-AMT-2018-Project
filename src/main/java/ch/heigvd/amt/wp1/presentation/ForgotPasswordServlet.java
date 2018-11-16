@@ -27,9 +27,6 @@ public class ForgotPasswordServlet extends HttpServlet {
     final String SEARCHUSER = "SEARCHUSER";
 
     @EJB
-    private ApplicationRepository applicationRepository;
-
-    @EJB
     private UserRepository userRepository;
 
     @EJB
@@ -56,11 +53,29 @@ public class ForgotPasswordServlet extends HttpServlet {
 
             if (user != null) {
                 //generate key
+                final String passwordResetToken = PasswordAuthentication.generateAlphanumString(20);
+
+                final String body = "Dear " + user.getFirstname() + " " + user.getLastname() + ",\r\n\r\n" +
+                        "Please use this link to reset your password : LINKHERE/" + passwordResetToken + "\r\n\r\n" +
+                        "you need to set a new password. \r\n\r\n Your Gamification team.";
 
                 //send mail
-            } else {
-                messages.put("login", "Bad credentials, please try again");
+                try {
+                    emailSender.sendEmail(user.getEmail(), "Gamification reset your password", body);
+                    System.out.println("PASSWORD RESET MAIL SENT");
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
             }
+
+            System.out.println("END OF DOPOST");
+
+            messages.put("message", "If your email is on our database, a mail to change your password will be sent.");
+
+            for (Map.Entry<String, String> error : messages.entrySet()) {
+                request.setAttribute(error.getKey(), error.getValue());
+            }
+            request.getRequestDispatcher("/WEB-INF/pages/forgot_password.jsp").forward(request, response);
         }
     }
 }
