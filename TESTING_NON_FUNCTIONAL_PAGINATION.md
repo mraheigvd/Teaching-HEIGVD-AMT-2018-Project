@@ -10,7 +10,7 @@ This document describe our experiment to point out the difference of using pagin
 
 ### Testing
 
-In our master branch we are using pagination in the resources tier so we have to make a new branch call test_non_func_pagination to implement the pagination in the business tier. To have interesting tests we must have enough "user applications", so we have a test class that insert 1'000 applications in the database. 
+In our master branch we are using pagination in the resources tier so we have to make a new branch call test_non_func_pagination to implement the pagination in the business tier. To have interesting tests we must have enough "user applications", so we have a test class that insert 1'000 applications in the database (in the test_non_func_pagination branch). 
 
 For the testes we are using JMeter, in the test plan we have a unit group with 10 users, this group manage cookies, has a simple controller which send an HTTP request tot get logged in and a loop controller that request 100 times the applications page (the page where a user see his applications). In summary we make 10 users requesting 100 times a page with pagination. 
 
