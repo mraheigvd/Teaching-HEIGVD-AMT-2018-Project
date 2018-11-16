@@ -9,7 +9,7 @@ First of all, clone this repo and build the WAR for using the latest sources, th
 - ``mvn clean install``
 - ``cp -f target/Gamification-WP1.war Docker/``
 - ``cd Docker``
-- ``docker-compose up``
+- ``docker-compose up --build``
 
 After that you only need to open a browser and go to: ``http://<YOUR_DOCKER_IP_MACHINE>:9876/Gamification-WP1/``
 
